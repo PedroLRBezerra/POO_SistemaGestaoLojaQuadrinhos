@@ -40,5 +40,11 @@ public class Edição {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	public Titulo getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(Titulo titulo) {
+		this.titulo = titulo;
+	}
 
 }
