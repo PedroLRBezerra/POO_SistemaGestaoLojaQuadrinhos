@@ -4,10 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import control.EdicaoControl;
-import control.TituloControl;
 import entity.Edição;
 import entity.Titulo;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,9 +17,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent> {
-	private TituloControl controlT = new TituloControl();
-	private EdicaoControl control = new EdicaoControl();
-	ObservableList<Titulo> titulos = FXCollections.observableArrayList();
+
+	public static EdicaoControl controlEd = new EdicaoControl(); 
+	//criando uma variavel do tipo Titulo para alimentar a combo
+	ObservableList<Titulo> titulos = TituloBoundary.controlTi.getLista(); 
 	private ComboBox<Titulo> comboTitulo = new ComboBox<>();
 
 	private GridPane panGrid;
@@ -65,7 +64,9 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.setHgap(10);
 		panGrid.setVgap(10);
 		
+		// deixar a comboBox nao editavel 
 		comboTitulo.setEditable(false);
+		// adicionar a lista de titulos na combo
 		comboTitulo.setItems(titulos);
 		
 		
@@ -76,17 +77,19 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		return panGrid;
 	}
 	
+	// ação ao clicar um botão
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 
-			control.adicionar(boundaryParaEntidade());
+			controlEd.adicionar(boundaryParaEntidade());
 		} else if (event.getTarget() == btnPesquisar) {
 			int edicao = Integer.parseInt(txtEdicao.getText());
-			Edição t = control.pesquisarPorTipo(edicao);			
+			Edição t = controlEd.pesquisarPorTipo(edicao);			
 			entidadeParaBoundary(t);
 		}
 		
 	}
+	//mover da entidade para a tela
 	private void entidadeParaBoundary(Edição e) {
 		if (e != null) {
 			txtEdicao.setText(String.valueOf(e.getEdicao()));
@@ -100,7 +103,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 	}
 	
-	
+	//mover da tela para a entidade
 	private Edição boundaryParaEntidade() {
 		Edição e = new Edição();
 		try {

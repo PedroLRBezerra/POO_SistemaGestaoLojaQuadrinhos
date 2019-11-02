@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 public class EdicaoControl {
 	
+	// criacao de uma lista observavel de Ediçoes
 	private ObservableList<Edição> lista = 
 			FXCollections.observableArrayList();
 	

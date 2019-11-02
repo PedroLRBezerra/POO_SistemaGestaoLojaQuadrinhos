@@ -12,15 +12,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent> {
-	private TituloControl control = new TituloControl();
+	public static TituloControl controlTi = new TituloControl(); //criação do TituloControl estatico
+	
 	private GridPane panGrid;
+	
 	private Button btnAdicionar = new Button("Adicionar");
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnExcluir = new Button("Excluir");
 	private TextField txtTitulo = new TextField();
 	private TextField txtAutor = new TextField();
 	
-	public TituloBoundary() { 
+	public TituloBoundary() {
 		
 		panGrid = new GridPane();
 		
@@ -46,14 +48,15 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 	}
 	@Override
 	public void handle(ActionEvent event) {
-			if (event.getTarget() == btnAdicionar) { 
-				control.adicionar(boundaryParaEntidade());
+			if (event.getTarget() == btnAdicionar) {
+				controlTi.adicionar(boundaryParaEntidade());
 			} else if (event.getTarget() == btnPesquisar) {
 				String titulo = txtTitulo.getText();
-				Titulo t = control.pesquisarPorTipo(titulo);			
+				Titulo t = controlTi.pesquisarPorTipo(titulo);			
 				entidadeParaBoundary(t);
 			}
 		}
+	//mover da entidade para a tela
 	private void entidadeParaBoundary(Titulo t) {
 		if (t != null) { 
 			txtTitulo.setText(t.getTitulo());
@@ -61,6 +64,8 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		}
 		
 	}
+	
+	//mover da tela para a entidade
 	private Titulo boundaryParaEntidade() {
 		Titulo t = new Titulo();
 		try {

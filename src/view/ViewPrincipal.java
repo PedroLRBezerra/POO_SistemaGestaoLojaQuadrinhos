@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,10 +16,12 @@ import javafx.stage.Stage;
 
 public class ViewPrincipal extends Application implements EventHandler<ActionEvent>{
 	private MenuBar barraMenu = new MenuBar();
+	
 	private Menu mnuRevista = new Menu("Revista");
 	private Menu mnuPessoa = new Menu("Pessoa");
 	private Menu mnuVenda = new Menu("Venda");
 	private Menu mnuRelatorio = new Menu("Relatorios");
+	
 	private MenuItem mnuClientes = new MenuItem("Clientes");
 	private MenuItem mnuTitulo = new MenuItem("Titulo");
 	private MenuItem mnuFuncionarios = new MenuItem("Funcionarios");
@@ -28,6 +29,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	private MenuItem mnuExemplar = new MenuItem("Exemplar");
 	private MenuItem mnuFolha = new MenuItem("Folha de pagamento");
 	private MenuItem mnuBalanco = new MenuItem("Balanço Geral");
+	
 	private BorderPane panPrincipal = new BorderPane();
 	
 	private Map<MenuItem, BoundaryContent> telas = new HashMap<>();
@@ -56,6 +58,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 		telas.put(mnuTitulo, new TituloBoundary());
 		telas.put(mnuEdicao, new EdicaoBoundary());
 		telas.put(mnuExemplar, new ExemplarBoundary());
+		//telas.put(mnuFuncionarios, new FuncionaroBoundary());
 		
 		Set<MenuItem> keys = telas.keySet();
 		for(MenuItem menu : keys) { 
@@ -78,6 +81,6 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	
 	
 	public static void main(String[] args) {
-		launch(args);
+		ViewPrincipal.launch(args);
 	}
 }
