@@ -12,7 +12,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -24,6 +28,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	private ComboBox<Titulo> comboTitulo = new ComboBox<>();
 
 	private GridPane panGrid;
+	private BorderPane painelPrincipal;
 	
 	private TextField txtEdicao= new TextField();
 	private TextField txtLançamento = new TextField();
@@ -37,9 +42,11 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
+	private TableView table = new TableView();
 	
 	public EdicaoBoundary() { 
 		panGrid = new GridPane();
+		painelPrincipal = new BorderPane();
 		panGrid.add(comboTitulo, 0, 0);
 		
 		panGrid.add(new Label("Edição"), 2, 0);
@@ -69,12 +76,39 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		// adicionar a lista de titulos na combo
 		comboTitulo.setItems(titulos);
 		
-		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
+		
+		painelPrincipal.setTop(panGrid);
+		painelPrincipal.setCenter(table);
+		
+		addTableColumns();
+	}
+	private void addTableColumns() {
+		TableColumn<Edição, String> columnTitulo = new TableColumn<>("Titulo");
+		columnTitulo.setCellValueFactory(
+				new PropertyValueFactory<Edição, String>("titulo"));
+		
+		TableColumn<Edição, Integer> columnEdicao = new TableColumn<>("Edicao");
+		columnEdicao.setCellValueFactory(
+				new PropertyValueFactory<Edição,Integer>("edicao"));
+		
+		TableColumn<Edição, Date> columnLancamento = new TableColumn<>("Lançamento");
+		columnLancamento.setCellValueFactory(
+				new PropertyValueFactory<Edição,Date>("lançamento"));
+		
+		TableColumn<Edição, Double> columnValorV = new TableColumn<>("ValorVenda");
+		columnValorV.setCellValueFactory(
+				new PropertyValueFactory<Edição,Double>("valorVenda"));
+		
+		
+		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento,columnValorV);
+		table.setItems(controlEd.getLista());
+		
+		
 	}
 	public Pane generateForm() { 
-		return panGrid;
+		return painelPrincipal;
 	}
 	
 	// ação ao clicar um botão

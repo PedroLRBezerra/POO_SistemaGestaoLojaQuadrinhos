@@ -15,6 +15,10 @@ public class Titulo {
 	public void setAutor(String autor) {
 		Autor = autor;
 	}
+	@Override
+	public String toString() {
+		return titulo ;
+	}
 	
 
 }

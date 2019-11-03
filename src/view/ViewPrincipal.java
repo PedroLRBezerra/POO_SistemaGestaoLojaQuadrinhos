@@ -39,6 +39,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	@Override
 	public void start(Stage stage) throws Exception {
 		panPrincipal.setTop(barraMenu);
+		panPrincipal.setStyle("-fx-padding: 10px");
 		generateMenus();
 		Scene scn = new Scene(panPrincipal, 800, 600);
 		
@@ -53,6 +54,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 		mnuRevista.getItems().addAll(mnuTitulo, mnuEdicao, mnuExemplar);
 		mnuPessoa.getItems().addAll(mnuClientes, mnuFuncionarios);
 		mnuRelatorio.getItems().addAll(mnuFolha, mnuBalanco);
+		
 		
 		// gerar as telas 
 		telas.put(mnuTitulo, new TituloBoundary());
