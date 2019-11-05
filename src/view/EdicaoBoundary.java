@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import control.EdicaoControl;
-import entity.Edição;
+import entity.EdiÃ§Ã£o;
 import entity.Titulo;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,7 +31,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	private BorderPane painelPrincipal;
 	
 	private TextField txtEdicao= new TextField();
-	private TextField txtLançamento = new TextField();
+	private TextField txtLanÃ§amento = new TextField();
 	private TextField txtValorCompra = new TextField();
 	private TextField txtValorVenda = new TextField();
 	private TextField txtDescricao = new TextField();
@@ -47,13 +47,14 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	public EdicaoBoundary() { 
 		panGrid = new GridPane();
 		painelPrincipal = new BorderPane();
+		painelPrincipal.setStyle("-fx-padding: 10px");
 		panGrid.add(comboTitulo, 0, 0);
 		
-		panGrid.add(new Label("Edição"), 2, 0);
+		panGrid.add(new Label("EdiÃ§Ã£o"), 2, 0);
 		panGrid.add(txtEdicao, 3, 0);
 		
-		panGrid.add(new Label("Lançamento"), 0, 1);
-		panGrid.add(txtLançamento, 1, 1);
+		panGrid.add(new Label("LanÃ§amento"), 0, 1);
+		panGrid.add(txtLanÃ§amento, 1, 1);
 		
 		panGrid.add(new Label("Valor Compra"), 0, 2);
 		panGrid.add(txtValorCompra, 1, 2);
@@ -61,7 +62,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Valor Venda"), 2, 2);
 		panGrid.add(txtValorVenda, 3, 2);
 		
-		panGrid.add(new Label("Descrição"), 0, 3);
+		panGrid.add(new Label("DescriÃ§Ã£o"), 0, 3);
 		panGrid.add(txtDescricao, 1, 3);
 		
 		panGrid.add(btnAdicionar, 0, 4);
@@ -85,21 +86,21 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		addTableColumns();
 	}
 	private void addTableColumns() {
-		TableColumn<Edição, String> columnTitulo = new TableColumn<>("Titulo");
+		TableColumn<EdiÃ§Ã£o, Titulo> columnTitulo = new TableColumn<>("Titulo");
 		columnTitulo.setCellValueFactory(
-				new PropertyValueFactory<Edição, String>("titulo"));
+				new PropertyValueFactory<EdiÃ§Ã£o, Titulo>("titulo"));
 		
-		TableColumn<Edição, Integer> columnEdicao = new TableColumn<>("Edicao");
+		TableColumn<EdiÃ§Ã£o, Integer> columnEdicao = new TableColumn<>("Edicao");
 		columnEdicao.setCellValueFactory(
-				new PropertyValueFactory<Edição,Integer>("edicao"));
+				new PropertyValueFactory<EdiÃ§Ã£o,Integer>("edicao"));
 		
-		TableColumn<Edição, Date> columnLancamento = new TableColumn<>("Lançamento");
+		TableColumn<EdiÃ§Ã£o, Date> columnLancamento = new TableColumn<>("LanÃ§amento");
 		columnLancamento.setCellValueFactory(
-				new PropertyValueFactory<Edição,Date>("lançamento"));
+				new PropertyValueFactory<EdiÃ§Ã£o,Date>("lanÃ§amento"));
 		
-		TableColumn<Edição, Double> columnValorV = new TableColumn<>("ValorVenda");
+		TableColumn<EdiÃ§Ã£o, Double> columnValorV = new TableColumn<>("ValorVenda");
 		columnValorV.setCellValueFactory(
-				new PropertyValueFactory<Edição,Double>("valorVenda"));
+				new PropertyValueFactory<EdiÃ§Ã£o,Double>("valorVenda"));
 		
 		
 		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento,columnValorV);
@@ -111,42 +112,45 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		return painelPrincipal;
 	}
 	
-	// ação ao clicar um botão
+	// aÃ§Ã£o ao clicar um botÃ£o
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 
 			controlEd.adicionar(boundaryParaEntidade());
 		} else if (event.getTarget() == btnPesquisar) {
 			int edicao = Integer.parseInt(txtEdicao.getText());
-			Edição t = controlEd.pesquisarPorTipo(edicao);			
+			String titulo = comboTitulo.getValue().getTitulo();
+			EdiÃ§Ã£o t = controlEd.pesquisarPorTipo(titulo,edicao);			
 			entidadeParaBoundary(t);
 		}
 		
 	}
 	//mover da entidade para a tela
-	private void entidadeParaBoundary(Edição e) {
+	private void entidadeParaBoundary(EdiÃ§Ã£o e) {
 		if (e != null) {
 			txtEdicao.setText(String.valueOf(e.getEdicao()));
-			String strData = sdf.format(e.getLançamento());
-			txtLançamento.setText(strData);
+			String strData = sdf.format(e.getLanÃ§amento());
+			txtLanÃ§amento.setText(strData);
 			txtValorCompra.setText(String.valueOf(e.getValorCompra()));
 			txtValorVenda.setText(String.valueOf(e.getValorVenda()));
 			txtDescricao.setText(e.getDescricao());
+			
 			
 		}
 		
 	}
 	
 	//mover da tela para a entidade
-	private Edição boundaryParaEntidade() {
-		Edição e = new Edição();
+	private EdiÃ§Ã£o boundaryParaEntidade() {
+		EdiÃ§Ã£o e = new EdiÃ§Ã£o();
 		try {
 			e.setEdicao(Integer.parseInt(txtEdicao.getText()));
-			Date d = sdf.parse(txtLançamento.getText());
-			e.setLançamento(d);
+			Date d = sdf.parse(txtLanÃ§amento.getText());
+			e.setLanÃ§amento(d);
 			e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
 			e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
 			e.setDescricao(txtDescricao.getText());
+			e.setTitulo(comboTitulo.getValue());
 		} catch (Exception f) {
 			f.printStackTrace();
 		}
