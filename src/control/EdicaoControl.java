@@ -1,29 +1,31 @@
 package control;
 
-import entity.Edição;
+import entity.EdiÃ§Ã£o;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EdicaoControl {
 	
-	// criacao de uma lista observavel de Ediçoes
-	private ObservableList<Edição> lista = 
+	// criacao de uma lista observavel de EdiÃ§oes
+	private ObservableList<EdiÃ§Ã£o> lista = 
 			FXCollections.observableArrayList();
 	
-	public void adicionar(Edição e) { 
+	public void adicionar(EdiÃ§Ã£o e) { 
 		getLista().add(e);
 	}
 	
-	public Edição pesquisarPorTipo(int edicao) { 
-		for (Edição e : getLista()) { 
-			if (e.getEdicao() == edicao){ 
-				return e;
+	public EdiÃ§Ã£o pesquisarPorTipo(String titulo , int edicao) { 
+		for (EdiÃ§Ã£o e : getLista()) { 
+			if(e.getTitulo().toString().equals(titulo)) {
+				if (e.getEdicao() == edicao){ 
+					return e;
+				}
 			}
 		}
 		return null;
 	}
 
-	public ObservableList<Edição> getLista() {
+	public ObservableList<EdiÃ§Ã£o> getLista() {
 		return lista;
 	}
 }
