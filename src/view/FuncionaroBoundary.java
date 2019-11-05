@@ -29,28 +29,39 @@ public class FuncionaroBoundary implements BoundaryContent {
 			FXCollections.observableArrayList("Atendente", "Assistente de Estoque ", "Gerente");
 	ComboBox<String> cmbCargo = new ComboBox<>();
 	
-	public FuncionaroBoundary() { 
+	public FuncionaroBoundary() {
 		
 		panGrid = new GridPane();
 		
-		panGrid.add(new Label("Nome"), 0, 1);
-		panGrid.add(txtNome, 1, 1,0,3);
-		panGrid.add(new Label("CPF"), 0, 2);
-		panGrid.add(txtCPF, 1, 2);
-		panGrid.add(new Label("Telefone"), 0, 3);
-		panGrid.add(txtTelefone, 1, 3);
-		panGrid.add(new Label("Dt Nasc."), 2, 3);
-		panGrid.add(txtNasc, 4, 3);
-		panGrid.add(cmbCargo, 0, 4);
+		panGrid.add(new Label("Nome"), 0, 0);
+		panGrid.add(txtNome, 1, 0);
+		
+		panGrid.add(new Label("CPF"), 0, 1);
+		panGrid.add(txtCPF, 1, 1);
+		
+		panGrid.add(new Label("Telefone"), 0, 2);
+		panGrid.add(txtTelefone, 1, 2);
+		
+		panGrid.add(new Label("Dt Nasc."), 3, 2);
+		panGrid.add(txtNasc, 4, 2);
+		
+		panGrid.add(new Label("Cargo"),0,4);
+		panGrid.add(cmbCargo, 1, 4);
+		
 		panGrid.add(new Label("Salario(R$)"), 3, 4);
 		panGrid.add(txtSalario, 4, 4);
+		
 		panGrid.add(new Label("Login"), 0, 5);
 		panGrid.add(txtLogin, 1,5);
-		panGrid.add(new Label("Senha"), 2, 5);
-		panGrid.add(txtSenha, 3, 5);
+		
+		panGrid.add(new Label("Senha"), 3, 5);
+		panGrid.add(txtSenha, 4, 5);
+		
+		panGrid.add(new Label("    "), 2, 0);
+		
 		panGrid.add(btnAdicionar, 0,6);
-		panGrid.add(btnPesquisar, 1, 7);
-		panGrid.add(btnExcluir, 2, 8);
+		panGrid.add(btnPesquisar, 1, 6);
+		panGrid.add(btnExcluir, 3, 6);
 		
 		
 		panGrid.setHgap(10);
