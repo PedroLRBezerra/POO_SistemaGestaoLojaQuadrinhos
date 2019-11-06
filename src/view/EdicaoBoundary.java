@@ -112,7 +112,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		return painelPrincipal;
 	}
 	
-	// ação ao clicar um botão
+	// acao ao clicar um botão
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 
