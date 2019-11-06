@@ -47,4 +47,10 @@ public class Edicao {
 		this.titulo = titulo;
 	}
 
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return String.valueOf(getEdicao());
+	}
 }
