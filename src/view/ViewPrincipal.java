@@ -25,10 +25,10 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	private MenuItem mnuClientes = new MenuItem("Clientes");
 	private MenuItem mnuTitulo = new MenuItem("Titulo");
 	private MenuItem mnuFuncionarios = new MenuItem("Funcionarios");
-	private MenuItem mnuEdicao = new MenuItem("Edição");
+	private MenuItem mnuEdicao = new MenuItem("Edicao");
 	private MenuItem mnuExemplar = new MenuItem("Exemplar");
 	private MenuItem mnuFolha = new MenuItem("Folha de pagamento");
-	private MenuItem mnuBalanco = new MenuItem("Balanço Geral");
+	private MenuItem mnuBalanco = new MenuItem("Balanco Geral");
 	
 	private BorderPane panPrincipal = new BorderPane();
 	
@@ -39,17 +39,16 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	@Override
 	public void start(Stage stage) throws Exception {
 		panPrincipal.setTop(barraMenu);
-		//panPrincipal.setStyle("-fx-padding: 10px");
 		generateMenus();
 		Scene scn = new Scene(panPrincipal, 800, 600);
 		
 		stage.setScene(scn);
-		stage.setTitle("Gestão de Revistas");
+		stage.setTitle("Gestao de Revistas");
 		stage.show();
 	}
 	
 	public void generateMenus() {
-		// criação da barra de menus 
+		// criacao da barra de menus 
 		barraMenu.getMenus().addAll(mnuRevista, mnuPessoa, mnuVenda,mnuRelatorio);
 		mnuRevista.getItems().addAll(mnuTitulo, mnuEdicao, mnuExemplar);
 		mnuPessoa.getItems().addAll(mnuClientes, mnuFuncionarios);

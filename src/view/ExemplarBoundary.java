@@ -1,7 +1,7 @@
 package view;
 
 import control.ExemplarControl;
-import entity.Edição;
+import entity.Edicao;
 import entity.Exemplar;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,8 +25,8 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 	
 	private TextField txtNumExemplar = new TextField();
 	
-	ObservableList<Edição> edicoes = EdicaoBoundary.controlEd.getLista();
-	private ComboBox<Edição> comboEdicao = new ComboBox<>();
+	ObservableList<Edicao> edicoes = EdicaoBoundary.controlEd.getLista();
+	private ComboBox<Edicao> comboEdicao = new ComboBox<>();
 
 	
 	public ExemplarBoundary() { 

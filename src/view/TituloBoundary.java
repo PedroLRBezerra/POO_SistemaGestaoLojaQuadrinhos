@@ -31,6 +31,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 	
 	public TituloBoundary() {
 		painelPrincipal = new BorderPane();
+		painelPrincipal.setStyle("-fx-padding: 10px");
 		panGrid = new GridPane();
 		
 		panGrid.add(new Label("Titulo"), 0, 0);

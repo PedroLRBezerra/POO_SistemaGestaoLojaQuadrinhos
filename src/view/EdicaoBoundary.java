@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import control.EdicaoControl;
-import entity.Edição;
+import entity.Edicao;
 import entity.Titulo;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,7 +31,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	private BorderPane painelPrincipal;
 	
 	private TextField txtEdicao= new TextField();
-	private TextField txtLançamento = new TextField();
+	private TextField txtLan�amento = new TextField();
 	private TextField txtValorCompra = new TextField();
 	private TextField txtValorVenda = new TextField();
 	private TextField txtDescricao = new TextField();
@@ -50,11 +50,11 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		painelPrincipal.setStyle("-fx-padding: 10px");
 		panGrid.add(comboTitulo, 0, 0);
 		
-		panGrid.add(new Label("Edição"), 2, 0);
+		panGrid.add(new Label("Edicao"), 2, 0);
 		panGrid.add(txtEdicao, 3, 0);
 		
-		panGrid.add(new Label("Lançamento"), 0, 1);
-		panGrid.add(txtLançamento, 1, 1);
+		panGrid.add(new Label("Lancamento"), 0, 1);
+		panGrid.add(txtLan�amento, 1, 1);
 		
 		panGrid.add(new Label("Valor Compra"), 0, 2);
 		panGrid.add(txtValorCompra, 1, 2);
@@ -62,7 +62,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Valor Venda"), 2, 2);
 		panGrid.add(txtValorVenda, 3, 2);
 		
-		panGrid.add(new Label("Descrição"), 0, 3);
+		panGrid.add(new Label("Descricao"), 0, 3);
 		panGrid.add(txtDescricao, 1, 3);
 		
 		panGrid.add(btnAdicionar, 0, 4);
@@ -86,21 +86,21 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		addTableColumns();
 	}
 	private void addTableColumns() {
-		TableColumn<Edição, Titulo> columnTitulo = new TableColumn<>("Titulo");
+		TableColumn<Edicao, Titulo> columnTitulo = new TableColumn<>("Titulo");
 		columnTitulo.setCellValueFactory(
-				new PropertyValueFactory<Edição, Titulo>("titulo"));
+				new PropertyValueFactory<Edicao, Titulo>("titulo"));
 		
-		TableColumn<Edição, Integer> columnEdicao = new TableColumn<>("Edicao");
+		TableColumn<Edicao, Integer> columnEdicao = new TableColumn<>("Edicao");
 		columnEdicao.setCellValueFactory(
-				new PropertyValueFactory<Edição,Integer>("edicao"));
+				new PropertyValueFactory<Edicao,Integer>("edicao"));
 		
-		TableColumn<Edição, Date> columnLancamento = new TableColumn<>("Lançamento");
+		TableColumn<Edicao, Date> columnLancamento = new TableColumn<>("Lancamento");
 		columnLancamento.setCellValueFactory(
-				new PropertyValueFactory<Edição,Date>("lançamento"));
+				new PropertyValueFactory<Edicao,Date>("lan�amento"));
 		
-		TableColumn<Edição, Double> columnValorV = new TableColumn<>("ValorVenda");
+		TableColumn<Edicao, Double> columnValorV = new TableColumn<>("ValorVenda");
 		columnValorV.setCellValueFactory(
-				new PropertyValueFactory<Edição,Double>("valorVenda"));
+				new PropertyValueFactory<Edicao,Double>("valorVenda"));
 		
 		
 		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento,columnValorV);
@@ -120,17 +120,17 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		} else if (event.getTarget() == btnPesquisar) {
 			int edicao = Integer.parseInt(txtEdicao.getText());
 			String titulo = comboTitulo.getValue().getTitulo();
-			Edição t = controlEd.pesquisarPorTipo(titulo,edicao);			
+			Edicao t = controlEd.pesquisarPorTipo(titulo,edicao);			
 			entidadeParaBoundary(t);
 		}
 		
 	}
 	//mover da entidade para a tela
-	private void entidadeParaBoundary(Edição e) {
+	private void entidadeParaBoundary(Edicao e) {
 		if (e != null) {
 			txtEdicao.setText(String.valueOf(e.getEdicao()));
-			String strData = sdf.format(e.getLançamento());
-			txtLançamento.setText(strData);
+			String strData = sdf.format(e.getLan�amento());
+			txtLan�amento.setText(strData);
 			txtValorCompra.setText(String.valueOf(e.getValorCompra()));
 			txtValorVenda.setText(String.valueOf(e.getValorVenda()));
 			txtDescricao.setText(e.getDescricao());
@@ -141,12 +141,12 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 	}
 	
 	//mover da tela para a entidade
-	private Edição boundaryParaEntidade() {
-		Edição e = new Edição();
+	private Edicao boundaryParaEntidade() {
+		Edicao e = new Edicao();
 		try {
 			e.setEdicao(Integer.parseInt(txtEdicao.getText()));
-			Date d = sdf.parse(txtLançamento.getText());
-			e.setLançamento(d);
+			Date d = sdf.parse(txtLan�amento.getText());
+			e.setLan�amento(d);
 			e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
 			e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
 			e.setDescricao(txtDescricao.getText());

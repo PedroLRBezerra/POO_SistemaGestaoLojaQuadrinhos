@@ -2,12 +2,12 @@ package entity;
 
 public class Exemplar {
 	private int exemplar;
-	private Edição edicao;
+	private Edicao edicao;
 	
-	public Edição getEdicao() {
+	public Edicao getEdicao() {
 		return edicao;
 	}
-	public void setEdicao(Edição edicao) {
+	public void setEdicao(Edicao edicao) {
 		this.edicao = edicao;
 	}
 	public int getExemplar() {

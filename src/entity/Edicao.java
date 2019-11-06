@@ -2,7 +2,7 @@ package entity;
 
 import java.util.Date;
 
-public class Edição {
+public class Edicao {
 	private int edicao;
 	private Date lançamento;
 	private double valorCompra;
