@@ -144,5 +144,5 @@ public class ClienteBoundery extends Application implements EventHandler<ActionE
 
 	public static void main(String[] args) {
 		launch(args);
-	}	
+	}
 }
