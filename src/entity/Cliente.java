@@ -3,41 +3,49 @@ package entity;
 import java.util.Date;
 
 public class Cliente {
+	private long id;
 	private String nome;
 	private String CPF;
-	private int telefone;
-	private String email;
+	private String telefone;
+	private String email; 
+	private Date dataNascimento;
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
+	}	
 	public String getCPF() {
 		return CPF;
 	}
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setCPF(String CPF) {
+		this.CPF = CPF;
 	}
-	public int getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(int telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public String getEmail() {
+	public String  getemail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setemail(String email) {
 		this.email = email;
 	}
-	public Date getNascimento() {
-		return nascimento;
+	public Date getdataNascimento() {
+		return dataNascimento;
 	}
-	public void setNascimento(Date nascimento) {
-		this.nascimento = nascimento;
+	public void setdataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
-	private Date nascimento;
-	
-
 }
+
+

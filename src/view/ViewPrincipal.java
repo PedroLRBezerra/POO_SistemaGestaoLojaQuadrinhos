@@ -60,6 +60,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 		telas.put(mnuEdicao, new EdicaoBoundary());
 		telas.put(mnuExemplar, new ExemplarBoundary());
 		telas.put(mnuFuncionarios, new FuncionaroBoundary());
+		telas.put(mnuClientes, new ClienteBoundery());
 		
 		Set<MenuItem> keys = telas.keySet();
 		for(MenuItem menu : keys) { 
