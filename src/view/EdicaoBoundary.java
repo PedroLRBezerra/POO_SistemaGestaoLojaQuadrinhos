@@ -74,6 +74,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		// deixar a comboBox nao editavel 
 		comboTitulo.setEditable(false);
+		
 		// adicionar a lista de titulos na combo
 		comboTitulo.setItems(titulos);
 		
@@ -85,6 +86,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		addTableColumns();
 	}
+	//criar as tabelas
 	private void addTableColumns() {
 		TableColumn<Edicao, Titulo> columnTitulo = new TableColumn<>("Titulo");
 		columnTitulo.setCellValueFactory(
@@ -112,7 +114,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		return painelPrincipal;
 	}
 	
-	// acao ao clicar um botão
+	// acao ao clicar um botao
 	@Override
 	public void handle(ActionEvent event) {
 		if (event.getTarget() == btnAdicionar) { 

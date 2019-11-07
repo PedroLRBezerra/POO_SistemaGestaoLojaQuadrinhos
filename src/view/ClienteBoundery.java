@@ -85,24 +85,21 @@ public class ClienteBoundery implements BoundaryContent,EventHandler<ActionEvent
 		columnCPF.setCellValueFactory(
 				new PropertyValueFactory<Cliente, String>("CPF"));
 		
-		
-		/*
-		 * TableColumn<Cliente, String> columntelefone = new TableColumn<>("email");
-		 * columntelefone.setCellValueFactory( new PropertyValueFactory<Cliente,
-		 * String>("email"));
-		 */
-
-		TableColumn<Cliente, String> columnemail = new TableColumn<>("telefone");
-		columnemail.setCellValueFactory(
+		TableColumn<Cliente, String> columntelefone = new TableColumn<>("telefone");
+		columntelefone.setCellValueFactory(
 				new PropertyValueFactory<Cliente, String>("telefone"));
 		
-		/*
-		 * TableColumn<Cliente, String> columnnasc = new TableColumn<>("telefone");
-		 * columnnasc.setCellValueFactory( new PropertyValueFactory<Cliente,
-		 * String>("telefone"));
-		 */
+	/*	TableColumn<Cliente, String> columnEmail = new TableColumn<>("EMAIL");
+		columnEmail.setCellValueFactory(
+				new PropertyValueFactory<Cliente, String>("email"));
 		
-		table.getColumns().addAll(columnId, columnNome, columnCPF,columnemail);//columnemail,columnnasc);
+		
+		  TableColumn<Cliente, Date> columnnasc = new TableColumn<>("Nascimento");
+		  columnnasc.setCellValueFactory(
+				  new PropertyValueFactory<Cliente, Date>("dataNascimento"));
+		*/ 
+		
+		table.getColumns().addAll(columnId, columnNome, columnCPF,columntelefone);//,columnEmail,columnnasc);
 		table.setItems(control.getLista());
 	}
 
@@ -148,7 +145,6 @@ public class ClienteBoundery implements BoundaryContent,EventHandler<ActionEvent
 
 	@Override
 	public Pane generateForm() {
-		// TODO Auto-generated method stub
 		return painelPrincipal;
 	}
 }
