@@ -79,8 +79,8 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 				controlTi.adicionar(boundaryParaEntidade());
 			} else if (event.getTarget() == btnPesquisar) {
 				String titulo = txtTitulo.getText();
-				Titulo t = controlTi.pesquisarPorTipo(titulo);			
-				entidadeParaBoundary(t);
+				controlTi.pesquisarPorTipo(titulo);			
+			//	entidadeParaBoundary(t);
 			}
 		}
 	//mover da entidade para a tela
