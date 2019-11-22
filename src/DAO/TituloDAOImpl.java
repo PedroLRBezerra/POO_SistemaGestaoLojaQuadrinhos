@@ -11,23 +11,26 @@ import java.util.List;
 import entity.Titulo;
 
 public class TituloDAOImpl implements TituloDAO{
-	private static final String URL = "";
-	private static final String USUARIO = "";
-	private static final String SENHA = "";
+
+	private Connection c;
+	
+	public TituloDAOImpl() throws ClassNotFoundException, SQLException {
+		IGenericDao gDao = new GenericDao();
+		c = gDao.getConnection();
+	}
 	
 
 	@Override
 	public void adicionar(Titulo t) throws DAOException {
 		try {
-			Connection con = DriverManager.getConnection(URL,USUARIO,SENHA);
 			String sql = "INSERT INTO titulo " 
 					+ "(titulo, autor)"
 					+ "VALUES (?, ?)";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, t.getTitulo());
 			ps.setString(2, t.getAutor());
 			ps.executeUpdate();
-			con.close();
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DAOException(e);
@@ -39,10 +42,9 @@ public class TituloDAOImpl implements TituloDAO{
 	public List<Titulo> pesquisarPorTipo(String titulo) throws DAOException {
 		List<Titulo> lista = new ArrayList<>();
 		try {
-			Connection con = DriverManager.getConnection(URL, USUARIO, SENHA);
 			String sql = "SELECT * FROM titulo "
 					+ "WHERE titulo LIKE ?";
-			PreparedStatement ps = con.prepareStatement(sql);
+			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, "%" + titulo + "%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -51,12 +53,57 @@ public class TituloDAOImpl implements TituloDAO{
 				t.setAutor(rs.getString("autor"));
 				lista.add(t);
 			}
+			rs.close();
+			ps.close();
 		}catch(SQLException e){
 				e.printStackTrace();
 				throw new DAOException(e);
 			}
 	  return lista;
 		}
+
+	@Override
+	public void atualizaTitulo(Titulo t) throws DAOException {
+		String sql = "UPDATE titulo SET titulo = ?, autor = ?"
+				+ "WHERE id = ?"
+				+ "VALUES (?,?,?)";
+				PreparedStatement ps = c.prepareStatement(sql);
+				ps.setString(1, t.getTitulo());
+				ps.setString(2, t.getAutor());
+				ps.setInt(3, t.getId()); // Talvez tenha q criar um Id no titulo
+				ps.execute();
+				ps.close();
+				
+	}
+
+	@Override
+	public void excluiTitulo(Titulo t) throws DAOException {
+		String sql = "DELETE titulo WHERE id = ?";
+				PreparedStatement ps = c.prepareStatement(sql);
+				ps.setInt(1, t.getId()); // Talvez tenha q criar um Id no titulo
+				ps.execute();
+				ps.close();
+		
+	}
+
+
+	@Override
+	public int proximoId() throws DAOException{
+		String sql = "SELECT MAX(id) + 1 AS proximo_id FROM titulos";
+		PreparedStatement ps;
+		try {
+			ps = c.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("proximo_id");
+			} else {
+				return 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
+	}
 	}
 
 
