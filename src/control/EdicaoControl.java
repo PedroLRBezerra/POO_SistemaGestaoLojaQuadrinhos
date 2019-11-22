@@ -1,5 +1,12 @@
 package control;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import com.sun.corba.se.impl.presentation.rmi.DynamicAccessPermission;
+
+import DAO.DAOException;
+import DAO.EdicaoDAOImpl;
 import entity.Edicao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,18 +18,36 @@ public class EdicaoControl {
 			FXCollections.observableArrayList();
 	
 	public void adicionar(Edicao e) { 
-		getLista().add(e);
+		try {
+			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
+			getLista().add(e);
+			eDAO.adicionar(e);
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
-	public Edicao pesquisarPorTipo(String titulo , int edicao) { 
-		for (Edicao e : getLista()) { 
-			if(e.getTitulo().toString().equals(titulo)) {
-				if (e.getEdicao() == edicao){ 
-					return e;
-				}
+	public void pesquisarPorTipo(String titulo , int edicao) {
+		try {
+			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
+			List<Edicao> listaEdicao = eDAO.pesquisarPorTipo(titulo, edicao);
+			for(Edicao e : listaEdicao) {
+				lista.add(e);
 			}
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
 		}
-		return null;
+	}
+	
+	public void exclui(Edicao e) {
+		try {
+			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
+			getLista().remove(e);
+			eDAO.excluiTitulo(e);
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
+		}
+		
 	}
 
 	public ObservableList<Edicao> getLista() {

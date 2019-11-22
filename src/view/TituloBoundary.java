@@ -16,7 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent> {
-	public static TituloControl controlTi = new TituloControl(); //criação do TituloControl estatico
+	
+	private static TextField txtId = new TextField();
+	
+	public static TituloControl controlTi = new TituloControl(txtId); //criação do TituloControl estatico
 	
 	private GridPane panGrid;
 	private BorderPane painelPrincipal;
@@ -55,7 +58,6 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		painelPrincipal.setCenter(table);
 		
 		addTableColumns();
-		
 	}
 	private void addTableColumns() {
 		TableColumn<Titulo, String> columnTitulo = new TableColumn<>("Titulo");
@@ -88,6 +90,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		if (t != null) { 
 			txtTitulo.setText(t.getTitulo());
 			txtAutor.setText(t.getAutor());
+			controlTi.proximoId();
 		}
 		
 	}
@@ -98,6 +101,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		try {
 			t.setTitulo(txtTitulo.getText());
 			t.setAutor(txtAutor.getText());
+			t.setId(Integer.parseInt(txtId.getText()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

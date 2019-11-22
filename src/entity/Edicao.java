@@ -5,8 +5,8 @@ import java.util.Date;
 public class Edicao {
 	private int edicao;
 	private Date lançamento;
-	private double valorCompra;
-	private double valorVenda;
+	//private double valorCompra;
+	//private double valorVenda;
 	private String descricao;
 	private Titulo titulo;
 	
@@ -22,18 +22,18 @@ public class Edicao {
 	public void setLançamento(Date lançamento) {
 		this.lançamento = lançamento;
 	}
-	public double getValorCompra() {
-		return valorCompra;
-	}
-	public void setValorCompra(double valorCompra) {
-		this.valorCompra = valorCompra;
-	}
-	public double getValorVenda() {
-		return valorVenda;
-	}
-	public void setValorVenda(double valorVenda) {
-		this.valorVenda = valorVenda;
-	}
+	//	public double getValorCompra() {
+	//		return valorCompra;
+	//	}
+	//	public void setValorCompra(double valorCompra) {
+	//		this.valorCompra = valorCompra;
+	//	}
+	//	public double getValorVenda() {
+	//		return valorVenda;
+	//	}
+	//	public void setValorVenda(double valorVenda) {
+	//		this.valorVenda = valorVenda;
+	//}
 	public String getDescricao() {
 		return descricao;
 	}

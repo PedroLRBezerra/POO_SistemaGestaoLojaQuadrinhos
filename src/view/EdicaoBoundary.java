@@ -56,12 +56,12 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Lancamento"), 0, 1);
 		panGrid.add(txtLançamento, 1, 1);
 		
-		panGrid.add(new Label("Valor Compra"), 0, 2);
+	/*	panGrid.add(new Label("Valor Compra"), 0, 2);
 		panGrid.add(txtValorCompra, 1, 2);
 		
 		panGrid.add(new Label("Valor Venda"), 2, 2);
 		panGrid.add(txtValorVenda, 3, 2);
-		
+	*/	
 		panGrid.add(new Label("Descricao"), 0, 3);
 		panGrid.add(txtDescricao, 1, 3);
 		
@@ -100,12 +100,12 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		columnLancamento.setCellValueFactory(
 				new PropertyValueFactory<Edicao,Date>("lançamento"));
 		
-		TableColumn<Edicao, Double> columnValorV = new TableColumn<>("ValorVenda");
+	/*	TableColumn<Edicao, Double> columnValorV = new TableColumn<>("ValorVenda");
 		columnValorV.setCellValueFactory(
 				new PropertyValueFactory<Edicao,Double>("valorVenda"));
+		*/
 		
-		
-		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento,columnValorV);
+		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento);
 		table.setItems(controlEd.getLista());
 		
 		
@@ -122,8 +122,8 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		} else if (event.getTarget() == btnPesquisar) {
 			int edicao = Integer.parseInt(txtEdicao.getText());
 			String titulo = comboTitulo.getValue().getTitulo();
-			Edicao t = controlEd.pesquisarPorTipo(titulo,edicao);			
-			entidadeParaBoundary(t);
+			controlEd.pesquisarPorTipo(titulo,edicao);			
+			//entidadeParaBoundary(t);
 		}
 		
 	}
@@ -133,8 +133,8 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 			txtEdicao.setText(String.valueOf(e.getEdicao()));
 			String strData = sdf.format(e.getLançamento());
 			txtLançamento.setText(strData);
-			txtValorCompra.setText(String.valueOf(e.getValorCompra()));
-			txtValorVenda.setText(String.valueOf(e.getValorVenda()));
+			//	txtValorCompra.setText(String.valueOf(e.getValorCompra()));
+			//	txtValorVenda.setText(String.valueOf(e.getValorVenda()));
 			txtDescricao.setText(e.getDescricao());
 			
 			
@@ -149,8 +149,8 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 			e.setEdicao(Integer.parseInt(txtEdicao.getText()));
 			Date d = sdf.parse(txtLançamento.getText());
 			e.setLançamento(d);
-			e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
-			e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
+			//	e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
+			//	e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
 			e.setDescricao(txtDescricao.getText());
 			e.setTitulo(comboTitulo.getValue());
 		} catch (Exception f) {

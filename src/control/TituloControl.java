@@ -19,6 +19,10 @@ public class TituloControl {
 	private TextField tfId;
 	
 	
+	public TituloControl(TextField tfId) {
+		this.tfId = tfId;
+	}
+	
 	public void adicionar(Titulo t) {
 		TituloDAOImpl tDAO;
 		try {
@@ -45,7 +49,7 @@ public class TituloControl {
 		
 }
 	// Possivel teste para escrever o ID automaticamente
-  /*	public void proximoId() {
+  	public void proximoId() {
 		try {
 			TituloDAOImpl tDAO = new TituloDAOImpl();
 			tfId.setText(String.valueOf(tDAO.proximoId()));
@@ -53,7 +57,7 @@ public class TituloControl {
 			e.printStackTrace();
 		}
 	}
-*/
+
 	public ObservableList<Titulo> getLista() {
 		return lista;
 	}

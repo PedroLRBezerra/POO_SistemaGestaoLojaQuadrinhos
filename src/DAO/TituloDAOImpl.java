@@ -23,12 +23,13 @@ public class TituloDAOImpl implements TituloDAO{
 	@Override
 	public void adicionar(Titulo t) throws DAOException {
 		try {
-			String sql = "INSERT INTO titulo " 
-					+ "(titulo, autor)"
-					+ "VALUES (?, ?)";
+			String sql = "INSERT INTO titulos " 
+					+ "(titulo, autor, id)"
+					+ "VALUES (?, ?, ?)";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, t.getTitulo());
 			ps.setString(2, t.getAutor());
+			ps.setInt(3, t.getId()); 
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -42,7 +43,7 @@ public class TituloDAOImpl implements TituloDAO{
 	public List<Titulo> pesquisarPorTipo(String titulo) throws DAOException {
 		List<Titulo> lista = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM titulo "
+			String sql = "SELECT * FROM titulos "
 					+ "WHERE titulo LIKE ?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, "%" + titulo + "%");
@@ -64,7 +65,8 @@ public class TituloDAOImpl implements TituloDAO{
 
 	@Override
 	public void atualizaTitulo(Titulo t) throws DAOException {
-		String sql = "UPDATE titulo SET titulo = ?, autor = ?"
+		try {
+		String sql = "UPDATE titulos SET titulo = ?, autor = ?"
 				+ "WHERE id = ?"
 				+ "VALUES (?,?,?)";
 				PreparedStatement ps = c.prepareStatement(sql);
@@ -73,17 +75,27 @@ public class TituloDAOImpl implements TituloDAO{
 				ps.setInt(3, t.getId()); // Talvez tenha q criar um Id no titulo
 				ps.execute();
 				ps.close();
+				}
+		catch(SQLException e){
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
 				
 	}
 
 	@Override
 	public void excluiTitulo(Titulo t) throws DAOException {
-		String sql = "DELETE titulo WHERE id = ?";
+		try {
+		String sql = "DELETE titulos WHERE id = ?";
 				PreparedStatement ps = c.prepareStatement(sql);
 				ps.setInt(1, t.getId()); // Talvez tenha q criar um Id no titulo
 				ps.execute();
 				ps.close();
-		
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
+				
 	}
 
 
