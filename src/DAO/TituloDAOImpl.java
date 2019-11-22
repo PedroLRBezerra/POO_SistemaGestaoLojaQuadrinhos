@@ -23,13 +23,14 @@ public class TituloDAOImpl implements TituloDAO{
 	@Override
 	public void adicionar(Titulo t) throws DAOException {
 		try {
-			String sql = "INSERT INTO titulos " 
-					+ "(titulo, autor, id)"
-					+ "VALUES (?, ?, ?)";
+			String sql = "INSERT INTO titulo " 
+					+ "(titulo, autor, id, titulo_alt)"
+					+ "VALUES (?, ?, ?, ?)";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, t.getTitulo());
 			ps.setString(2, t.getAutor());
 			ps.setInt(3, t.getId()); 
+			ps.setString(4, t.getTitulo_alt());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -43,7 +44,7 @@ public class TituloDAOImpl implements TituloDAO{
 	public List<Titulo> pesquisarPorTipo(String titulo) throws DAOException {
 		List<Titulo> lista = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM titulos "
+			String sql = "SELECT * FROM titulo "
 					+ "WHERE titulo LIKE ?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, "%" + titulo + "%");
@@ -52,6 +53,7 @@ public class TituloDAOImpl implements TituloDAO{
 				Titulo t = new Titulo();
 				t.setTitulo(rs.getString("titulo"));
 				t.setAutor(rs.getString("autor"));
+				t.setTitulo_alt(rs.getString("titulo_alt"));
 				lista.add(t);
 			}
 			rs.close();
@@ -66,13 +68,14 @@ public class TituloDAOImpl implements TituloDAO{
 	@Override
 	public void atualizaTitulo(Titulo t) throws DAOException {
 		try {
-		String sql = "UPDATE titulos SET titulo = ?, autor = ?"
+		String sql = "UPDATE titulos SET titulo = ?, autor = ? , titulo_alt = ?"
 				+ "WHERE id = ?"
-				+ "VALUES (?,?,?)";
+				+ "VALUES (?,?,?,?)";
 				PreparedStatement ps = c.prepareStatement(sql);
 				ps.setString(1, t.getTitulo());
 				ps.setString(2, t.getAutor());
-				ps.setInt(3, t.getId()); // Talvez tenha q criar um Id no titulo
+				ps.setString(3, t.getTitulo_alt());
+				ps.setInt(4, t.getId()); // Talvez tenha q criar um Id no titulo
 				ps.execute();
 				ps.close();
 				}
@@ -86,9 +89,10 @@ public class TituloDAOImpl implements TituloDAO{
 	@Override
 	public void excluiTitulo(Titulo t) throws DAOException {
 		try {
-		String sql = "DELETE titulos WHERE id = ?";
+		String sql = "DELETE titulo WHERE titulo = ?";
 				PreparedStatement ps = c.prepareStatement(sql);
-				ps.setInt(1, t.getId()); // Talvez tenha q criar um Id no titulo
+				ps.setString(1, t.getTitulo());
+				//ps.setInt(1, t.getId()); // Talvez tenha q criar um Id no titulo
 				ps.execute();
 				ps.close();
 		} catch(SQLException e){
@@ -101,7 +105,7 @@ public class TituloDAOImpl implements TituloDAO{
 
 	@Override
 	public int proximoId() throws DAOException{
-		String sql = "SELECT MAX(id) + 1 AS proximo_id FROM titulos";
+		String sql = "SELECT MAX(id) + 1 AS proximo_id FROM titulo";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement(sql);

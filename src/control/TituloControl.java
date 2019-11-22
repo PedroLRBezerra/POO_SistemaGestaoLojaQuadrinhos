@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import DAO.DAOException;
+import DAO.EdicaoDAOImpl;
 import DAO.TituloDAO;
 import DAO.TituloDAOImpl;
+import entity.Edicao;
 import entity.Titulo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,8 +48,20 @@ public class TituloControl {
 			e.printStackTrace();		
 		}
 		
+	}
+	
+	public void exclui(Titulo t) {
+		try {
+			TituloDAOImpl tDAO = new TituloDAOImpl();
+			getLista().remove(t);
+			tDAO.excluiTitulo(t);
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
+		}
 		
-}
+	}
+	
+	
 	// Possivel teste para escrever o ID automaticamente
   	public void proximoId() {
 		try {

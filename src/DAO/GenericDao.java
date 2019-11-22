@@ -11,8 +11,8 @@ public class GenericDao implements IGenericDao {
 	@Override
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("net.sourceforge.jtds.jdbc.Driver");
-		c = DriverManager.getConnection("jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=Quadrinhos;namedPipes=true",
-				"root", "");
+		c = DriverManager.getConnection("jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=quadrinhos;namedPipes=true",
+				"joao", "123");
 		System.out.println("Conexão OK");
 		return c;
 	}

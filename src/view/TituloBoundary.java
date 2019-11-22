@@ -3,6 +3,8 @@ package view;
 
 import control.TituloControl;
 import entity.Titulo;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,6 +31,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 	private Button btnExcluir = new Button("Excluir");
 	private TextField txtTitulo = new TextField();
 	private TextField txtAutor = new TextField();
+	private TextField txtTituloAlt = new TextField();
 	
 	private TableView table = new TableView();
 	
@@ -40,8 +43,11 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Titulo"), 0, 0);
 		panGrid.add(txtTitulo, 1, 0);
 		
-		panGrid.add(new Label("Autor"), 0, 1);
-		panGrid.add(txtAutor, 1, 1);
+		panGrid.add(new Label("Titulo alternativo"), 0, 1);
+		panGrid.add(txtTituloAlt, 1, 1);
+		
+		panGrid.add(new Label("Autor"), 0, 2);
+		panGrid.add(txtAutor, 1, 2);
 		
 		panGrid.add(btnAdicionar, 0, 3);
 		panGrid.add(btnPesquisar, 1, 3);
@@ -53,10 +59,13 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
+		btnExcluir.addEventHandler(ActionEvent.ANY,this);
 		
 		painelPrincipal.setTop(panGrid);
 		painelPrincipal.setCenter(table);
 		
+		
+		controlTi.proximoId();
 		addTableColumns();
 	}
 	private void addTableColumns() {
@@ -70,6 +79,15 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		table.getColumns().addAll(columnTitulo, columnAutor);
 		table.setItems(controlTi.getLista());
+		table.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Titulo>() {
+					@Override
+					public void changed(ObservableValue<? extends Titulo> observable, 
+							Titulo oldValue,
+							Titulo newValue) {
+						entidadeParaBoundary(newValue);
+					}
+				});
 		
 	}
 	public Pane generateForm() { 
@@ -78,11 +96,14 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 	@Override
 	public void handle(ActionEvent event) {
 			if (event.getTarget() == btnAdicionar) {
+				controlTi.proximoId();
 				controlTi.adicionar(boundaryParaEntidade());
 			} else if (event.getTarget() == btnPesquisar) {
 				String titulo = txtTitulo.getText();
 				controlTi.pesquisarPorTipo(titulo);			
 			//	entidadeParaBoundary(t);
+			} else if(event.getTarget() == btnExcluir) {
+				controlTi.exclui(boundaryParaEntidade());
 			}
 		}
 	//mover da entidade para a tela
@@ -90,6 +111,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		if (t != null) { 
 			txtTitulo.setText(t.getTitulo());
 			txtAutor.setText(t.getAutor());
+			txtTituloAlt.setText(t.getTitulo_alt());
 			controlTi.proximoId();
 		}
 		
@@ -101,6 +123,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		try {
 			t.setTitulo(txtTitulo.getText());
 			t.setAutor(txtAutor.getText());
+			t.setTitulo_alt(txtTituloAlt.getText());
 			t.setId(Integer.parseInt(txtId.getText()));
 		} catch (Exception e) {
 			e.printStackTrace();
