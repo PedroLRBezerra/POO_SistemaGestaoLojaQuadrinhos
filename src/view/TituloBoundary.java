@@ -40,19 +40,24 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		painelPrincipal.setStyle("-fx-padding: 10px");
 		panGrid = new GridPane();
 		
-		panGrid.add(new Label("Titulo"), 0, 0);
-		panGrid.add(txtTitulo, 1, 0);
+		panGrid.add(new Label("ID"), 0, 0);
+		panGrid.add(txtId, 1, 0);
+		txtId.setDisable(true);
 		
-		panGrid.add(new Label("Titulo alternativo"), 0, 1);
-		panGrid.add(txtTituloAlt, 1, 1);
+		panGrid.add(new Label("Titulo"), 0, 1);
+		panGrid.add(txtTitulo, 1, 1);
 		
-		panGrid.add(new Label("Autor"), 0, 2);
-		panGrid.add(txtAutor, 1, 2);
+		panGrid.add(new Label("Titulo alternativo"), 0, 2);
+		panGrid.add(txtTituloAlt, 1, 2);
 		
-		panGrid.add(btnAdicionar, 0, 3);
-		panGrid.add(btnPesquisar, 1, 3);
-		panGrid.add(btnExcluir, 2, 3);
-		panGrid.add(table,0,4);
+		panGrid.add(new Label("Autor"), 0, 3);
+		panGrid.add(txtAutor, 1, 3);
+		
+		
+		panGrid.add(btnAdicionar, 0, 4);
+		panGrid.add(btnPesquisar, 1, 4);
+		panGrid.add(btnExcluir, 2, 4);
+		panGrid.add(table,0,5);
 		
 		panGrid.setHgap(10);
 		panGrid.setVgap(10);
@@ -77,7 +82,11 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		columnAutor.setCellValueFactory(
 				new PropertyValueFactory<Titulo, String>("autor"));
 		
-		table.getColumns().addAll(columnTitulo, columnAutor);
+		TableColumn<Titulo, Integer> columnId = new TableColumn<>("ID");
+		columnId.setCellValueFactory(
+				new PropertyValueFactory<Titulo, Integer>("id"));
+		
+		table.getColumns().addAll(columnId,columnTitulo, columnAutor);
 		table.setItems(controlTi.getLista());
 		table.getSelectionModel().selectedItemProperty().addListener(
 				new ChangeListener<Titulo>() {
@@ -101,11 +110,11 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 			} else if (event.getTarget() == btnPesquisar) {
 				String titulo = txtTitulo.getText();
 				controlTi.pesquisarPorTipo(titulo);			
-			//	entidadeParaBoundary(t);
 			} else if(event.getTarget() == btnExcluir) {
 				controlTi.exclui(boundaryParaEntidade());
 			}
 		}
+	
 	//mover da entidade para a tela
 	private void entidadeParaBoundary(Titulo t) {
 		if (t != null) { 

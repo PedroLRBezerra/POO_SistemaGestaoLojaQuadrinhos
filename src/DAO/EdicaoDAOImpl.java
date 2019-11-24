@@ -21,9 +21,9 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 
 	@Override
 	public void adicionar(Edicao e) throws DAOException {
-		String sql = "INSERT INTO edicoes "
-				+ "(num_edicao,lancamento,descricao)"
-				+ " VALUES (?, ?, ?)";
+		String sql = "INSERT INTO edicao "
+				+ "(num_edicao,lancamento,descricao,titulo_id)"
+				+ " VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, e.getEdicao());
@@ -31,6 +31,7 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 			java.sql.Date d = new java.sql.Date(t);
 			ps.setDate(2, d);
 			ps.setString(3, e.getDescricao());
+			ps.setInt(4, e.getTitulo().getId());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e1) {
