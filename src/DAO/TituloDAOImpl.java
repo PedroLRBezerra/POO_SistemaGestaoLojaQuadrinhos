@@ -54,6 +54,7 @@ public class TituloDAOImpl implements TituloDAO{
 				t.setTitulo(rs.getString("titulo"));
 				t.setAutor(rs.getString("autor"));
 				t.setTitulo_alt(rs.getString("titulo_alt"));
+				t.setId(rs.getInt("id"));
 				lista.add(t);
 			}
 			rs.close();

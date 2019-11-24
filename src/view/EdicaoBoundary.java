@@ -80,6 +80,7 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
+		btnExcluir.addEventHandler(ActionEvent.ANY, this);
 		
 		painelPrincipal.setTop(panGrid);
 		painelPrincipal.setCenter(table);
@@ -124,6 +125,8 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 			String titulo = comboTitulo.getValue().getTitulo();
 			controlEd.pesquisarPorTipo(titulo,edicao);			
 			//entidadeParaBoundary(t);
+		} else if(event.getTarget() == btnExcluir) {
+			controlEd.exclui(boundaryParaEntidade());
 		}
 		
 	}

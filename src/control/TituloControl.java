@@ -31,6 +31,7 @@ public class TituloControl {
 			tDAO = new TituloDAOImpl();
 			getLista().add(t);
 			tDAO.adicionar(t);
+			lista.clear();
 		} catch (ClassNotFoundException | SQLException | DAOException e) {
 			e.printStackTrace();
 		}
@@ -40,6 +41,7 @@ public class TituloControl {
 		TituloDAOImpl tDAO;
 		try {
 			tDAO = new TituloDAOImpl();
+			lista.clear();
 		List<Titulo> listaTitulos = tDAO.pesquisarPorTipo(titulo);
 		for (Titulo t : listaTitulos) {
 				lista.add(t);

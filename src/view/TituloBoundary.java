@@ -5,6 +5,7 @@ import control.TituloControl;
 import entity.Titulo;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,6 +30,8 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 	private Button btnAdicionar = new Button("Adicionar");
 	private Button btnPesquisar = new Button("Pesquisar");
 	private Button btnExcluir = new Button("Excluir");
+	private Button btnLimpa = new Button("Limpar");
+	
 	private TextField txtTitulo = new TextField();
 	private TextField txtAutor = new TextField();
 	private TextField txtTituloAlt = new TextField();
@@ -56,7 +59,8 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		panGrid.add(btnAdicionar, 0, 4);
 		panGrid.add(btnPesquisar, 1, 4);
-		panGrid.add(btnExcluir, 2, 4);
+		panGrid.add(btnLimpa, 2, 4);
+		panGrid.add(btnExcluir, 3, 4);
 		panGrid.add(table,0,5);
 		
 		panGrid.setHgap(10);
@@ -65,6 +69,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnExcluir.addEventHandler(ActionEvent.ANY,this);
+		btnLimpa.addEventHandler(ActionEvent.ANY, this);
 		
 		painelPrincipal.setTop(panGrid);
 		painelPrincipal.setCenter(table);
@@ -74,6 +79,9 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		addTableColumns();
 	}
 	private void addTableColumns() {
+		table.getItems().clear();
+		table.getColumns().clear();
+		
 		TableColumn<Titulo, String> columnTitulo = new TableColumn<>("Titulo");
 		columnTitulo.setCellValueFactory(
 				new PropertyValueFactory<Titulo, String>("titulo"));
@@ -97,7 +105,6 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 						entidadeParaBoundary(newValue);
 					}
 				});
-		
 	}
 	public Pane generateForm() { 
 		return painelPrincipal;
@@ -107,11 +114,24 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 			if (event.getTarget() == btnAdicionar) {
 				controlTi.proximoId();
 				controlTi.adicionar(boundaryParaEntidade());
+				txtAutor.clear();
+				txtId.clear();
+				txtTitulo.clear();
+				txtTituloAlt.clear();
 			} else if (event.getTarget() == btnPesquisar) {
 				String titulo = txtTitulo.getText();
 				controlTi.pesquisarPorTipo(titulo);			
 			} else if(event.getTarget() == btnExcluir) {
 				controlTi.exclui(boundaryParaEntidade());
+				ObservableList<Titulo> productSelected, allProducts;
+				allProducts = table.getItems();
+				productSelected = table.getSelectionModel().getSelectedItems();
+				productSelected.forEach(allProducts::remove);
+			} else {
+				txtAutor.clear();
+				txtId.clear();
+				txtTitulo.clear();
+				txtTituloAlt.clear();
 			}
 		}
 	

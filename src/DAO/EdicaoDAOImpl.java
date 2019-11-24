@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.Edicao;
+import entity.Titulo;
 
 public class EdicaoDAOImpl implements EdicaoDAO {
 	
@@ -50,7 +51,7 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 				+ "AND e.num_edicao = ?";
 		try {
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setString(1, e.getTitulo().getTitulo()); // nao sei se isso esta certo
+			ps.setString(1, e.getTitulo().getTitulo()); 
 			ps.setInt(2, e.getEdicao());
 			ps.execute();
 			ps.close();
@@ -64,9 +65,9 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 	public List<Edicao> pesquisarPorTipo(String titulo, int edicao) throws DAOException {
 		List<Edicao> lista = new ArrayList<Edicao>();
 		try {
-			String sql = "SELECT * FROM edicao e , titulo t" + 
-					"WHERE t.id = e.titulo_id AND" + 
-					"num_edicao LIKE ? AND T.titulo LIKE ?";
+			String sql = "SELECT * FROM edicao e , titulo t " + 
+					"WHERE t.id = e.titulo_id AND " + 
+					"e.num_edicao LIKE ? AND t.titulo LIKE ?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, edicao);
 			ps.setString(2, titulo);
@@ -76,7 +77,14 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 				e.setEdicao(rs.getInt("num_edicao"));
 				e.setDescricao(rs.getString("descricao"));
 				e.setLançamento(rs.getDate("lancamento"));
-			//	e.setTitulo(rs.getString("titulo"));
+				
+				Titulo t = new Titulo();
+				t.setTitulo(rs.getString("titulo"));
+				t.setId(rs.getInt("id"));
+				t.setAutor(rs.getString("autor"));
+				t.setTitulo_alt(rs.getString("titulo_alt"));
+				
+				e.setTitulo(t);
 				lista.add(e);
 			}
 		} catch (SQLException e1) {
