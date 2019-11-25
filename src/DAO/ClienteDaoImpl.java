@@ -11,7 +11,14 @@ import entity.Cliente;
 
 public class ClienteDaoImpl {
 	public void adicionar(Cliente c) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
+		try {
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			String sql = "INSERT INTO Cliente (Id,Nome,CPF,telefone,email,dataNascimento) " +
@@ -32,7 +39,14 @@ public class ClienteDaoImpl {
 	}
 	
 	public List<Cliente> pesquisar (String Nome) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
+		try {
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		List<Cliente> lista = new ArrayList<>();
 		try {
 			String sql = "SELECT * FROM Cliente WHERE Nome LIKE ?";
@@ -57,7 +71,14 @@ public class ClienteDaoImpl {
 	}
 
 	public void removerPorNome(String  Nome) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
+		try {
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			String sql = "DELETE FROM Cliente WHERE Nome=?";
 			PreparedStatement stmt = con.prepareStatement(sql);

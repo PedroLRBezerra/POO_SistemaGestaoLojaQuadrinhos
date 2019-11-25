@@ -30,6 +30,8 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 	private MenuItem mnuFolha = new MenuItem("Folha de pagamento");
 	private MenuItem mnuBalanco = new MenuItem("Balanco Geral");
 	
+	private MenuItem mnuRVenda = new MenuItem("Registrar Venda");
+	
 	private BorderPane panPrincipal = new BorderPane();
 	
 	private Map<MenuItem, BoundaryContent> telas = new HashMap<>();
@@ -53,6 +55,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 		mnuRevista.getItems().addAll(mnuTitulo, mnuEdicao, mnuExemplar);
 		mnuPessoa.getItems().addAll(mnuClientes, mnuFuncionarios);
 		mnuRelatorio.getItems().addAll(mnuFolha, mnuBalanco);
+		mnuVenda.getItems().addAll(mnuRVenda);
 		
 		
 		// gerar as telas 
@@ -61,6 +64,7 @@ public class ViewPrincipal extends Application implements EventHandler<ActionEve
 		telas.put(mnuExemplar, new ExemplarBoundary());
 		telas.put(mnuFuncionarios, new FuncionaroBoundary());
 		telas.put(mnuClientes, new ClienteBoundery());
+		telas.put(mnuRVenda, new VendaBoundery());
 		
 		Set<MenuItem> keys = telas.keySet();
 		for(MenuItem menu : keys) { 
