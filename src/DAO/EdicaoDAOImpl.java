@@ -62,15 +62,15 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 	}
 
 	@Override
-	public List<Edicao> pesquisarPorTipo(String titulo, int edicao) throws DAOException {
+	public List<Edicao> pesquisarPorTipo(String titulo) throws DAOException {
 		List<Edicao> lista = new ArrayList<Edicao>();
 		try {
 			String sql = "SELECT * FROM edicao e , titulo t " + 
 					"WHERE t.id = e.titulo_id AND " + 
-					"e.num_edicao LIKE ? AND t.titulo LIKE ?";
+					"t.titulo LIKE ?";
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setInt(1, edicao);
-			ps.setString(2, titulo);
+		//	ps.setInt(1, edicao);
+			ps.setString(1, titulo);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Edicao e = new Edicao();

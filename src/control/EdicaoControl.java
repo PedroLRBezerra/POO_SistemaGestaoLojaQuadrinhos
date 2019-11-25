@@ -27,10 +27,10 @@ public class EdicaoControl {
 		}
 	}
 	
-	public void pesquisarPorTipo(String titulo , int edicao) {
+	public void pesquisarPorTipo(String titulo) {
 		try {
 			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
-			List<Edicao> listaEdicao = eDAO.pesquisarPorTipo(titulo, edicao);
+			List<Edicao> listaEdicao = eDAO.pesquisarPorTipo(titulo);
 			for(Edicao e : listaEdicao) {
 				lista.add(e);
 			}

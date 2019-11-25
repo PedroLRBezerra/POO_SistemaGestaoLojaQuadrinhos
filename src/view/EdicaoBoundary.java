@@ -6,6 +6,8 @@ import java.util.Date;
 import control.EdicaoControl;
 import entity.Edicao;
 import entity.Titulo;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -108,7 +110,15 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		
 		table.getColumns().addAll(columnTitulo, columnEdicao,columnLancamento);
 		table.setItems(controlEd.getLista());
-		
+		table.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Edicao>() {
+					@Override
+					public void changed(ObservableValue<? extends Edicao> observable, 
+							Edicao oldValue,
+							Edicao newValue) {
+						entidadeParaBoundary(newValue);
+					}
+				});
 		
 	}
 	public Pane generateForm() { 
@@ -121,9 +131,8 @@ public class EdicaoBoundary implements BoundaryContent, EventHandler<ActionEvent
 		if (event.getTarget() == btnAdicionar) { 
 			controlEd.adicionar(boundaryParaEntidade());
 		} else if (event.getTarget() == btnPesquisar) {
-			int edicao = Integer.parseInt(txtEdicao.getText());
 			String titulo = comboTitulo.getValue().getTitulo();
-			controlEd.pesquisarPorTipo(titulo,edicao);			
+			controlEd.pesquisarPorTipo(titulo);			
 			//entidadeParaBoundary(t);
 		} else if(event.getTarget() == btnExcluir) {
 			controlEd.exclui(boundaryParaEntidade());
