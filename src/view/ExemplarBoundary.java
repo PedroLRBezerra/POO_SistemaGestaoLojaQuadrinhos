@@ -41,6 +41,8 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 	private Button btnExcluir = new Button("Excluir");
 	
 	private TextField txtNumExemplar = new TextField();
+	private TextField txtValorCompra = new TextField();
+	private TextField txtValorVenda = new TextField();
 	
 	ObservableList<Titulo>titulos = TituloBoundary.controlTi.getLista();
 	ObservableList<Edicao> edicoes = this.controlEx.edicoes;
@@ -63,6 +65,12 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 		
 		panGrid.add(new Label("Num exemplar"), 0, 1);
 		panGrid.add(txtNumExemplar, 1, 1);
+		
+		panGrid.add(new Label("Valor Compra"), 0, 2);
+		panGrid.add(txtValorCompra, 1, 2);
+		
+		panGrid.add(new Label("Valor Venda"), 2, 2);
+		panGrid.add(txtValorVenda, 3, 2);
 		
 		panGrid.add(btnAdicionar, 0, 3);
 		panGrid.add(btnPesquisar, 1, 3);
@@ -168,6 +176,8 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 	private void entidadeParaBoundary(Exemplar e) {
 		if (e != null) {
 			txtNumExemplar.setText(String.valueOf(e.getExemplar()));
+			txtValorCompra.setText(String.valueOf(e.getValorCompra()));
+			txtValorVenda.setText(String.valueOf(e.getValorVenda()));
 		}
 		
 	}
@@ -176,6 +186,8 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 		try {
 			e.setEdicao(comboEdicao.getValue());
 			e.setExemplar(Integer.parseInt(txtNumExemplar.getText()));
+			e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
+			e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
 		} catch (Exception f) {
 			f.printStackTrace();
 		}
