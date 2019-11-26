@@ -8,6 +8,7 @@ public class Venda {
 	private Date data;
 	private double ValorTotal;
 	public List<Exemplar> exemplarSelecionados = new LinkedList<Exemplar>();
+	private Cliente cliente;
 	
 	public List<Exemplar> getExemplarSelecionados() {
 		return exemplarSelecionados;
@@ -31,6 +32,14 @@ public class Venda {
 
 	public void setValorTotal(double valorTotal) {
 		ValorTotal = valorTotal;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 }

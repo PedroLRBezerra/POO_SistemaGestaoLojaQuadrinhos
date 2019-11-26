@@ -89,11 +89,24 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 //			this.controlEx.
 //		});
 //		
-//
+		buscarClientes();
+		comboCliente.setItems(clientes);
+		comboCliente.setEditable(false);
+
 		panGrid.setHgap(10);
 		panGrid.setVgap(10);
 		
 		painelPrincipal.setTop(panGrid);
+	}
+
+	private void buscarClientes() {
+		ObservableList<Cliente> cli = FXCollections.observableArrayList();
+		List<Cliente>l = new LinkedList<Cliente>();
+		l=controlV.buscarClientes();
+		for (Cliente cliente : l) {
+			cli.add(cliente);
+		}
+		clientes=cli;
 	}
 
 	@Override

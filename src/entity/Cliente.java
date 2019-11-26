@@ -9,6 +9,13 @@ public class Cliente {
 	private String telefone;
 	private String email; 
 	private Date dataNascimento;
+	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return nome;
+	}
 
 	public long getId() {
 		return id;

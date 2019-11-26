@@ -1,11 +1,14 @@
 package control;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
+import DAO.ClienteDaoImpl;
 import DAO.DAOException;
 import DAO.EdicaoDAOImpl;
 import DAO.VendaDaoImp;
+import entity.Cliente;
 import entity.Edicao;
 
 public class VendaControl {
@@ -14,7 +17,7 @@ public class VendaControl {
 		try {
 			EdicaoDAOImpl edDao = new EdicaoDAOImpl();
 			try {
-				List<Edicao> ed = edDao.pesquisarPorTitulo(t);
+				List<Edicao> ed = edDao.pesquisarPorTipo(t);
 				return ed;
 			} catch (DAOException e) {
 				e.printStackTrace();
@@ -30,6 +33,20 @@ public class VendaControl {
 			System.out.println("C");
 		}
 		return null;
+	}
+	
+	
+	
+	public List<Cliente> buscarClientes(){
+		List<Cliente> lc = new LinkedList<Cliente>();
+		ClienteDaoImpl cliDao = new ClienteDaoImpl();
+		try {
+			lc=cliDao.buscarClientes();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lc;
 	}
 
 }
