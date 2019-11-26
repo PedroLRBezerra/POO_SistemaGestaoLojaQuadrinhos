@@ -1,9 +1,10 @@
 package entity;
 
 public class Exemplar {
-	private int exemplar;
+	private String exemplar;
 	private Edicao edicao;
 	private double valorCompra;
+	private double valorVenda;
 	
 	
 	public double getValorCompra() {
@@ -18,7 +19,6 @@ public class Exemplar {
 	public void setValorVenda(double valorVenda) {
 		this.valorVenda = valorVenda;
 	}
-	private double valorVenda;
 	
 	public Edicao getEdicao() {
 		return edicao;
@@ -26,10 +26,10 @@ public class Exemplar {
 	public void setEdicao(Edicao edicao) {
 		this.edicao = edicao;
 	}
-	public int getExemplar() {
+	public String getExemplar() {
 		return exemplar;
 	}
-	public void setExemplar(int exemplar) {
+	public void setExemplar(String exemplar) {
 		this.exemplar = exemplar;
 	}
 	

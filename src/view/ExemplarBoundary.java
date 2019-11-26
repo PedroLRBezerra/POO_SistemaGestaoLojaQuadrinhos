@@ -45,7 +45,7 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 	private TextField txtValorVenda = new TextField();
 	
 	ObservableList<Titulo>titulos = TituloBoundary.controlTi.getLista();
-	ObservableList<Edicao> edicoes = this.controlEx.edicoes;
+	ObservableList<Edicao> edicoes = FXCollections.observableArrayList();
 	
 	private ComboBox<Titulo> comboTitulo = new ComboBox<>();
 	private ComboBox<Edicao> comboEdicao = new ComboBox<>();
@@ -81,8 +81,12 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 		
 		comboTitulo.setOnAction((e)-> {
 			System.out.println(comboTitulo.getValue().toString());
-			this.controlEx.updateEdicaoList(comboTitulo.getValue());
-			edicoes = this.controlEx.edicoes;
+			List<Edicao> ed = new LinkedList<Edicao>();
+			ed = this.controlEx.updateEdicaoList(comboTitulo.getValue().toString());
+	     	edicoes.clear();
+	     	for (Edicao edicao : ed) {
+	     		edicoes.add(edicao);
+	     	}
 			comboEdicao.setItems(edicoes);
 		});
 		
@@ -152,12 +156,26 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 		TableColumn<Exemplar, Integer> columnExexplar = new TableColumn<>("Exemplar");
 		columnExexplar.setCellValueFactory(
 				new PropertyValueFactory<Exemplar,Integer>("exemplar"));
+		TableColumn<Exemplar, Double> columnVenda = new TableColumn<>("Valor_Venda");
+		columnVenda.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Double>("valorVenda"));
+		
+		TableColumn<Exemplar, Double> columnCompra = new TableColumn<>("Valor_Compra");
+		columnCompra.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Double>("valorCompra"));
 		
 		
-		
-		table.getColumns().addAll(columnTitulo, columnEdicao,columnExexplar);
+		table.getColumns().addAll(columnTitulo, columnEdicao,columnExexplar,columnCompra,columnVenda);
 		table.setItems(controlEx.getLista());
-		
+		table.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Exemplar>() {
+					@Override
+					public void changed(ObservableValue<? extends Exemplar> observable, 
+							Exemplar oldValue,
+							Exemplar newValue) {
+						entidadeParaBoundary(newValue);
+					}
+				});
 		
 	}
 	public Pane generateForm() { 
@@ -168,9 +186,10 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 			if (event.getTarget() == btnAdicionar) {
 				controlEx.adicionar(boundaryParaEntidade());
 			} else if (event.getTarget() == btnPesquisar) {
-				int exemplar = Integer.parseInt(txtNumExemplar.getText());
-				Exemplar e = controlEx.pesquisarPorTipo(exemplar);			
-				entidadeParaBoundary(e);
+				//String exemplar = txtNumExemplar.getText();
+				String titulo = comboTitulo.getValue().getTitulo();
+				controlEx.pesquisarPorTipo(titulo);			
+			//	entidadeParaBoundary(e);
 			}
 		}
 	private void entidadeParaBoundary(Exemplar e) {
@@ -185,7 +204,7 @@ public class ExemplarBoundary implements BoundaryContent, EventHandler<ActionEve
 		Exemplar e = new Exemplar();
 		try {
 			e.setEdicao(comboEdicao.getValue());
-			e.setExemplar(Integer.parseInt(txtNumExemplar.getText()));
+			e.setExemplar(txtNumExemplar.getText());
 			e.setValorCompra(Double.parseDouble(txtValorCompra.getText()));
 			e.setValorVenda(Double.parseDouble(txtValorVenda.getText()));
 		} catch (Exception f) {
