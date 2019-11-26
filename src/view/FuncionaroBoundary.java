@@ -1,5 +1,6 @@
 package view;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ import javafx.scene.layout.Pane;
 
 public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionEvent> {
 	
-	public static ControlFun controlFun = new ControlFun();
+	public  ControlFun controlFun = new ControlFun();
 	
 	private GridPane panGrid;
 	private BorderPane painelPrincipal;
@@ -97,6 +98,8 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 		painelPrincipal.setTop(panGrid);
 		painelPrincipal.setCenter(table);
 		
+		controlFun.buscarFuncionarios();
+		
 		addTableColumns();
 		
 		
@@ -128,11 +131,23 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 	@Override
 	public void handle(ActionEvent event) {
 		if(event.getTarget()==btnAdicionar) {
-			controlFun.adicionar(boundaryParaEntidade());
+			try {
+				controlFun.adicionar(boundaryParaEntidade());
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (event.getTarget()==btnPesquisar) {
 			String cpf = txtCPF.getText();
-			Funcionario f = controlFun.pesquisarPorCPF(cpf);
-			entidadeParaBoundary(f);
+			Funcionario f;
+			try {
+				f = controlFun.pesquisarPorCPF(cpf);
+				entidadeParaBoundary(f);
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
