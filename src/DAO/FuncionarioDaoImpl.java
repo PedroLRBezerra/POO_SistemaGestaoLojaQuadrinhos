@@ -13,10 +13,16 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 	
 	@Override
 	public void adicionar(Funcionario f) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
-		
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
 		try {
-			String sql = "INSERT INTO Funcionario (CPF,Nome,Telefone,Login,Senha,Nascimento,Salario) " +
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		try {
+			String sql = "INSERT INTO Funcionarios (CPF,Nome,Telefone,Login,Senha,cargo,nascimento,Salario) " +
 			"VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, f.getCPF());
@@ -35,38 +41,51 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 		
 	}
 	
-	public List<Funcionario> pesquisar (String CPF) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
-		List<Funcionario> lista = new ArrayList<>();
+	public Funcionario pesquisar (String CPF) throws DAOException {
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
 		try {
-			String sql = "SELECT * FROM Funcionario WHERE CPF LIKE ?";
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Funcionario f = new Funcionario();
+		try {
+			String sql = "SELECT * FROM Funcionarios WHERE CPF LIKE ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, "%" + CPF + "%");
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) { 
-				Funcionario f = new Funcionario();
+		
 				f.setCPF(rs.getString("CPF"));
 				f.setNome(rs.getString("nome"));
 				f.setTelefone(rs.getLong("telefone"));
-				f.setNascimento(rs.getDate("data_nascimento"));
+				f.setNascimento(rs.getDate("nascimento"));
 				f.setCargo(rs.getString("cargo"));
 				f.setLogin(rs.getString("login"));
 				f.setSenha(rs.getString("senha"));
-				f.setSalario(rs.getDouble("salário"));
-				lista.add(f);
-			}
+				f.setSalario(rs.getDouble("salario"));
+		
+			rs.close();
 			con.close();
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		}
-		return lista;
+		return f;
 	}
 
 	@Override
 	public void removerPorCPF(String  CPF) throws DAOException {
-		Connection con = DBUtil.getInstance().getConnection();
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
 		try {
-			String sql = "DELETE FROM Funcionario WHERE CPF=?";
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			String sql = "DELETE FROM Funcionarios WHERE CPF=?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, CPF);
 			stmt.executeUpdate();
@@ -75,5 +94,38 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 			throw new DAOException(e);
 		}
 		
-	}	
+	}
+
+	@Override
+	public List<Funcionario> buscar() throws DAOException {
+		GenericDao gDao = new GenericDao();
+		Connection con=null;
+		try {
+			con = gDao.getConnection();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		List<Funcionario> lista = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM funcionarios";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) { 
+				Funcionario f = new Funcionario();
+				f.setCPF(rs.getString("CPF"));
+				f.setNome(rs.getString("nome"));
+				f.setTelefone(rs.getLong("telefone"));
+				f.setNascimento(rs.getDate("nascimento"));
+				f.setCargo(rs.getString("cargo"));
+				f.setLogin(rs.getString("login"));
+				f.setSenha(rs.getString("senha"));
+				f.setSalario(rs.getDouble("salario"));
+				lista.add(f);
+			}
+			con.close();
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		}
+		return lista;	}	
 }
