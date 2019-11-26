@@ -120,7 +120,7 @@ public class TituloDAOImpl implements TituloDAO{
 			e.printStackTrace();
 			throw new DAOException(e);
 		}
-	}
+		}
 	}
 
 

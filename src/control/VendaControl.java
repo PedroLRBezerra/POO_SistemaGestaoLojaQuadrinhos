@@ -14,7 +14,7 @@ public class VendaControl {
 		try {
 			EdicaoDAOImpl edDao = new EdicaoDAOImpl();
 			try {
-				List<Edicao> ed = edDao.pesquisarPorTitulo(t);
+				List<Edicao> ed = edDao.pesquisarPorTipo(t);
 				return ed;
 			} catch (DAOException e) {
 				e.printStackTrace();

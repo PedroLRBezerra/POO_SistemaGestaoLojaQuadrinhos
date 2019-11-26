@@ -1,5 +1,11 @@
 package control;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import DAO.DAOException;
+import DAO.EdicaoDAOImpl;
+import DAO.ExemplarDAOImpl;
 import entity.Edicao;
 import entity.Exemplar;
 import entity.Titulo;
@@ -16,32 +22,44 @@ public class ExemplarControl {
 	public ObservableList<Edicao> edicoes = FXCollections.observableArrayList();
 	
 	public void adicionar(Exemplar e) { 
-		getLista().add(e);
+		try {
+			ExemplarDAOImpl eDAO = new ExemplarDAOImpl();
+			lista.clear();
+			getLista().add(e);
+			eDAO.adicionar(e);
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
-	public Exemplar pesquisarPorTipo(int exemplar) { 
-		for (Exemplar e : getLista()) { 
-			if (e.getExemplar() == exemplar){ 
-				return e;
+	public void pesquisarPorTipo(String titulo) { 
+		try {
+			ExemplarDAOImpl eDAO = new ExemplarDAOImpl();
+			lista.clear();
+			List<Exemplar> listaEdicao = eDAO.pesquisarPorTipo(titulo);
+			for(Exemplar e : listaEdicao) {
+				lista.add(e);
 			}
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
 		}
-		return null;
 	}
 
 	public ObservableList<Exemplar> getLista() {
 		return lista;
 	}
 	
-	public void updateEdicaoList(Titulo titulo) {
-		ObservableList<Edicao> ed = FXCollections.observableArrayList();
-		
-		for (Edicao edicao : EdicaoBoundary.controlEd.getLista()) {
-			if(titulo==edicao.getTitulo()) {
-				ed.add(edicao);
-				System.out.println("aa");
-			}
+	public List<Edicao> updateEdicaoList(String titulo) {
+		EdicaoDAOImpl edDao;
+		try {
+			edDao = new EdicaoDAOImpl();
+			List<Edicao> ed = edDao.pesquisarPorTipo(titulo);
+			return ed;
+		} catch (ClassNotFoundException | SQLException | DAOException e) {
+			e.printStackTrace();
 		}
+		return null;
 		
-		this.edicoes=ed;
+		
 	}
 }

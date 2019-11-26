@@ -20,6 +20,7 @@ public class EdicaoControl {
 	public void adicionar(Edicao e) { 
 		try {
 			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
+			lista.clear();
 			getLista().add(e);
 			eDAO.adicionar(e);
 		} catch (ClassNotFoundException | SQLException | DAOException e1) {
@@ -30,6 +31,7 @@ public class EdicaoControl {
 	public void pesquisarPorTipo(String titulo) {
 		try {
 			EdicaoDAOImpl eDAO = new EdicaoDAOImpl();
+			lista.clear();
 			List<Edicao> listaEdicao = eDAO.pesquisarPorTipo(titulo);
 			for(Edicao e : listaEdicao) {
 				lista.add(e);
@@ -52,5 +54,16 @@ public class EdicaoControl {
 
 	public ObservableList<Edicao> getLista() {
 		return lista;
+	}
+
+	public int pegarID(Edicao e) {
+		int id = 0;
+		try {
+			EdicaoDAOImpl eDao = new EdicaoDAOImpl();
+			id = eDao.pegarID(e);
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
+			e1.printStackTrace();
+		}
+		return id;
 	}
 }

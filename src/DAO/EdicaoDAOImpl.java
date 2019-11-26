@@ -69,7 +69,6 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 					"WHERE t.id = e.titulo_id AND " + 
 					"t.titulo LIKE ?";
 			PreparedStatement ps = c.prepareStatement(sql);
-		//	ps.setInt(1, edicao);
 			ps.setString(1, titulo);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
@@ -85,11 +84,12 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 				t.setTitulo_alt(rs.getString("titulo_alt"));
 				
 				e.setTitulo(t);
+				e.setId(rs.getInt("id_edicao"));
 				lista.add(e);
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-			throw new DAOException(e1);
+			throw new DAOException(e1);	
 		}
 		return lista;
 
@@ -97,6 +97,29 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 
 
 	@Override
+	public int pegarID(Edicao e) throws DAOException {
+		String sql = "SELECT id_edicao FROM edicao " + 
+				"WHERE edicao.titulo_id = ? AND edicao.num_edicao = ?";
+		PreparedStatement ps;
+		try {
+			ps = c.prepareStatement(sql);
+			ps.setInt(1,e.getTitulo().getId());
+			ps.setInt(2, e.getEdicao());
+			ResultSet rs  = ps.executeQuery();
+			if(!rs.next()) {
+				e.setId(rs.getInt("id_edicao"));
+				return  rs.getInt("id_edicao");
+			} else {
+				return rs.getInt("id_edicao");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return 0;
+	}
+
+
+/*	@Override
 	public List<Edicao> pesquisarPorTitulo(String titulo) throws DAOException {
 		List<Edicao> lista = new ArrayList<Edicao>();
 		try {
@@ -128,5 +151,5 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 		}
 		return lista;
 
-	}
+	}*/
 }

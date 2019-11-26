@@ -29,9 +29,9 @@ public class TituloControl {
 		TituloDAOImpl tDAO;
 		try {
 			tDAO = new TituloDAOImpl();
+			lista.clear();
 			getLista().add(t);
 			tDAO.adicionar(t);
-			lista.clear();
 		} catch (ClassNotFoundException | SQLException | DAOException e) {
 			e.printStackTrace();
 		}
