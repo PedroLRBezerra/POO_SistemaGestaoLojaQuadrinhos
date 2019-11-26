@@ -33,5 +33,9 @@ public class Exemplar {
 		this.exemplar = exemplar;
 	}
 	
+	@Override
+	public String toString() {
+		return getExemplar();
+	}
 
 }

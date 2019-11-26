@@ -11,6 +11,9 @@ import entity.Edicao;
 import entity.Exemplar;
 import entity.Titulo;
 import entity.Venda;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +21,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent>{
 	private GridPane panGrid;
@@ -35,7 +42,7 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 	ObservableList<Edicao> edicoes  = FXCollections.observableArrayList();
 	ObservableList<Exemplar> exemplaresCombo= FXCollections.observableArrayList();
 	ObservableList<Cliente> clientes= FXCollections.observableArrayList();
-	
+	ObservableList<Exemplar> exemplaresVenda= FXCollections.observableArrayList();
 	private ComboBox<Titulo> comboTitulo = new ComboBox<>();
 	private ComboBox<Edicao> comboEdicao = new ComboBox<>();
 	private ComboBox<Exemplar>comboExemplar =  new ComboBox<>();
@@ -61,11 +68,13 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Exemplar"), 4, 0);
 		panGrid.add(comboExemplar,5,0);
 		
+		panGrid.add(btnAdd, 6, 0);
 		
 		
 		panGrid.add(new Label("Cliente"), 0, 1);
 		panGrid.add(comboCliente, 1, 1);
 		
+		btnAdd.addEventHandler(ActionEvent.ANY, this);
 		
 		comboTitulo.setEditable(false);
 		comboTitulo.setItems(titulos);
@@ -83,12 +92,18 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 		
 		
 		comboEdicao.setEditable(false);
+		comboEdicao.setOnAction((e)->{
+			List<Exemplar> lex=new LinkedList<Exemplar>();
+			lex=this.controlV.buscarExemplaresPorEdicao(comboEdicao.getValue().getId());
+			exemplaresCombo.clear();
+			for (Exemplar exemplar : lex) {
+				exemplaresCombo.add(exemplar);
+			}
+			comboExemplar.setItems(exemplaresCombo);
+		});
 		
+		comboExemplar.setEditable(false);
 		
-//		comboEdicao.setOnAction((e)->{
-//			this.controlEx.
-//		});
-//		
 		buscarClientes();
 		comboCliente.setItems(clientes);
 		comboCliente.setEditable(false);
@@ -97,8 +112,83 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.setVgap(10);
 		
 		painelPrincipal.setTop(panGrid);
+		painelPrincipal.setBottom(table);
+		
+		addTableColumns();
 	}
 
+	private void addTableColumns() {
+		TableColumn<Exemplar,Titulo> columnTitulo = new TableColumn<Exemplar,Titulo>("Titulo");
+		columnTitulo.setCellValueFactory(new Callback<CellDataFeatures<Exemplar,Titulo>, ObservableValue<Titulo>>() {
+		     public ObservableValue<Titulo> call(CellDataFeatures<Exemplar,Titulo> p) {
+		         // p.getValue() returns the Person instance for a particular TableView row
+		    	 ObservableValue<Titulo> o = new ObservableValue<Titulo>() {
+					
+					@Override
+					public void removeListener(InvalidationListener listener) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void addListener(InvalidationListener listener) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void removeListener(ChangeListener<? super Titulo> listener) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public Titulo getValue() {
+						// TODO Auto-generated method stub
+						return  p.getValue().getEdicao().getTitulo();
+					}
+					
+					@Override
+					public void addListener(ChangeListener<? super Titulo> listener) {
+						// TODO Auto-generated method stub
+						
+					}
+				};
+		         return o;
+		     }
+		  });
+		 
+
+		
+		TableColumn<Exemplar, Edicao> columnEdicao = new TableColumn<>("Edicao");
+		columnEdicao.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Edicao>("edicao"));
+		
+		TableColumn<Exemplar, Integer> columnExexplar = new TableColumn<>("Exemplar");
+		columnExexplar.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Integer>("exemplar"));
+		TableColumn<Exemplar, Double> columnVenda = new TableColumn<>("Valor_Venda");
+		columnVenda.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Double>("valorVenda"));
+		
+		TableColumn<Exemplar, Double> columnCompra = new TableColumn<>("Valor_Compra");
+		columnCompra.setCellValueFactory(
+				new PropertyValueFactory<Exemplar,Double>("valorCompra"));
+		
+		
+		table.getColumns().addAll(columnTitulo, columnEdicao,columnExexplar,columnVenda);
+		table.setItems(exemplaresVenda);
+//		table.getSelectionModel().selectedItemProperty().addListener(
+//				new ChangeListener<Exemplar>() {
+//					@Override
+//					public void changed(ObservableValue<? extends Exemplar> observable, 
+//							Exemplar oldValue,
+//							Exemplar newValue) {
+//						entidadeParaBoundary(newValue);
+//					}
+//				});
+		
+	}
 	private void buscarClientes() {
 		ObservableList<Cliente> cli = FXCollections.observableArrayList();
 		List<Cliente>l = new LinkedList<Cliente>();
@@ -108,10 +198,16 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 		}
 		clientes=cli;
 	}
+	
+	
 
 	@Override
-	public void handle(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void handle(ActionEvent event) {
+		if(event.getTarget()==btnAdd && comboExemplar.getValue()!=null) {
+			venda.exemplarSelecionados.add(comboExemplar.getValue());
+			exemplaresVenda.add(comboExemplar.getValue());
+			exemplaresCombo.remove(comboExemplar.getValue());
+		}
 		
 	}
 

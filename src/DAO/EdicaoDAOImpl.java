@@ -28,7 +28,7 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 		try {
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, e.getEdicao());
-			long t = e.getLanï¿½amento().getTime();
+			long t = e.getLançamento().getTime();
 			java.sql.Date d = new java.sql.Date(t);
 			ps.setDate(2, d);
 			ps.setString(3, e.getDescricao());
@@ -75,7 +75,7 @@ public class EdicaoDAOImpl implements EdicaoDAO {
 				Edicao e = new Edicao();
 				e.setEdicao(rs.getInt("num_edicao"));
 				e.setDescricao(rs.getString("descricao"));
-				e.setLanï¿½amento(rs.getDate("lancamento"));
+				e.setLançamento(rs.getDate("lancamento"));
 				
 				Titulo t = new Titulo();
 				t.setTitulo(rs.getString("titulo"));

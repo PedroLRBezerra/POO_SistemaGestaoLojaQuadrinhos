@@ -7,9 +7,11 @@ import java.util.List;
 import DAO.ClienteDaoImpl;
 import DAO.DAOException;
 import DAO.EdicaoDAOImpl;
+import DAO.ExemplarDAOImpl;
 import DAO.VendaDaoImp;
 import entity.Cliente;
 import entity.Edicao;
+import entity.Exemplar;
 
 public class VendaControl {
 	
@@ -35,7 +37,25 @@ public class VendaControl {
 		return null;
 	}
 	
-	
+	public List<Exemplar> buscarExemplaresPorEdicao(int id){
+		List<Exemplar> lex = new LinkedList<Exemplar>();
+		
+		ExemplarDAOImpl exDao=null;
+		try {
+			exDao = new ExemplarDAOImpl();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			lex=exDao.pesquisarPorEdicao(id);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lex;
+	}
 	
 	public List<Cliente> buscarClientes(){
 		List<Cliente> lc = new LinkedList<Cliente>();
