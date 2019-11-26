@@ -130,6 +130,7 @@ select*from funcionarios
 
 INSERT INTO clientes(CPF,telefone,email,nascimento,nome)VALUES
 ('21986301749','40028922','pedroluiz2000@gmail.com','25/09/2025','Juliiana'),
+('43244444222','43444444','pedroluiz@gmail.com','11/11/2005','Alan'),
 ('39834750365','45364565','rajgodtwostars@gmail.com','03/04/2006','João Sardinha'),
 ('93736482156','34564565','darkmaster02@gmail.com','09/09/2009','George'),
 ('86564866790','24342343','mooncrystal2007@gmail.com','05/05/2005','Lucas'),

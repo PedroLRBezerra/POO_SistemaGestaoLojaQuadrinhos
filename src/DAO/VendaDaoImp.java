@@ -4,13 +4,14 @@ import java.util.List;
 
 import entity.Edicao;
 import entity.Exemplar;
+import entity.Venda;
 
 public class VendaDaoImp implements VendaDao{
 
 	@Override
-	public List<Exemplar> buscarExemplares(Edicao ed) {
-		// TODO Auto-generated method stub
-		return null;
+	public void adicionarVenda(Venda v) {
+		
 	}
 
+	
 }

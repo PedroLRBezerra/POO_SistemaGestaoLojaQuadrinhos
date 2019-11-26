@@ -2,19 +2,20 @@ package entity;
 
 public class Pagamento {
 	private int Desconto;
-	private double ValorVenda;
+	private String tipoPagamento;
 	
-	public double getValorVenda() {
-		return ValorVenda;
-	}
-	public void setValorVenda(double valorVenda) {
-		ValorVenda = valorVenda;
-	}
+	
 	public int getDesconto() {
 		return Desconto;
 	}
 	public void setDesconto(int desconto) {
 		Desconto = desconto;
+	}
+	public String getTipoPagamento() {
+		return tipoPagamento;
+	}
+	public void setTipoPagamento(String tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
 	}
 
 }

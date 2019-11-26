@@ -52,11 +52,11 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 		}
 		Funcionario f = new Funcionario();
 		try {
-			String sql = "SELECT * FROM Funcionarios WHERE CPF LIKE ?";
+			String sql = "SELECT * FROM Funcionarios WHERE CPF = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setString(1, "%" + CPF + "%");
+			stmt.setString(1,CPF);
 			ResultSet rs = stmt.executeQuery();
-		
+			if(rs.next()) {
 				f.setCPF(rs.getString("CPF"));
 				f.setNome(rs.getString("nome"));
 				f.setTelefone(rs.getLong("telefone"));
@@ -65,7 +65,7 @@ public class FuncionarioDaoImpl implements FuncionarioDao {
 				f.setLogin(rs.getString("login"));
 				f.setSenha(rs.getString("senha"));
 				f.setSalario(rs.getDouble("salario"));
-		
+			}
 			rs.close();
 			con.close();
 		} catch (SQLException e) {

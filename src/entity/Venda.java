@@ -9,6 +9,9 @@ public class Venda {
 	private double ValorTotal;
 	public List<Exemplar> exemplarSelecionados = new LinkedList<Exemplar>();
 	private Cliente cliente;
+	private Funcionario funcionario;
+	private Pagamento pagamento;
+	
 	
 	public List<Exemplar> getExemplarSelecionados() {
 		return exemplarSelecionados;
@@ -41,5 +44,27 @@ public class Venda {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
+
+
+
+
+	
 
 }

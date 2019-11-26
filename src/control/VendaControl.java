@@ -8,10 +8,13 @@ import DAO.ClienteDaoImpl;
 import DAO.DAOException;
 import DAO.EdicaoDAOImpl;
 import DAO.ExemplarDAOImpl;
+import DAO.FuncionarioDaoImpl;
 import DAO.VendaDaoImp;
 import entity.Cliente;
 import entity.Edicao;
 import entity.Exemplar;
+import entity.Funcionario;
+import entity.Venda;
 
 public class VendaControl {
 	
@@ -67,6 +70,21 @@ public class VendaControl {
 			e.printStackTrace();
 		}
 		return lc;
+	}
+	
+	public Funcionario getFunc() {
+		FuncionarioDaoImpl fDao= new FuncionarioDaoImpl();
+		try {
+			return fDao.pesquisar("25186533710");
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void finalizarVenda(Venda v) {
+		
 	}
 
 }
