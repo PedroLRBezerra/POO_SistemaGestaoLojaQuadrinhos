@@ -23,7 +23,7 @@ private Connection c;
 	@Override
 	public void adicionar(Exemplar e) throws DAOException {
 		String sql = "INSERT INTO exemplar"
-				+ " ((exemplar,valor_compra,valor_venda,id_edicao)"
+				+ " (exemplar,valor_compra,valor_venda,id_edicao)"
 				+ " VALUES (?,?,?,?)";
 		try {
 			PreparedStatement ps = c.prepareStatement(sql);

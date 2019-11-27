@@ -4,8 +4,12 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import DAO.DAOException;
 import control.ControlFun;
 import entity.Funcionario;
+import entity.Titulo;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -90,7 +94,7 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 		
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
-		
+		btnExcluir.addEventHandler(ActionEvent.ANY, this);
 			
 		panGrid.setHgap(10);
 		panGrid.setVgap(10);
@@ -127,6 +131,16 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 		
 		table.getColumns().addAll(columnNome,columnCargo,columnCPF,columnTel,columnSalario);
 		table.setItems(controlFun.getLista());
+		
+		table.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Funcionario>() {
+					@Override
+					public void changed(ObservableValue<? extends Funcionario> observable, 
+							Funcionario oldValue,
+							Funcionario newValue) {
+						entidadeParaBoundary(newValue);
+					}
+				});
 	}
 	@Override
 	public void handle(ActionEvent event) {
@@ -149,6 +163,16 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 			}
 			
 		}
+		else if(event.getTarget()== btnExcluir) {
+			try {
+				controlFun.exclui(boundaryParaEntidade());
+				controlFun.buscarFuncionarios();
+				table.setItems(controlFun.getLista());
+			} catch (ClassNotFoundException | DAOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	
@@ -162,7 +186,7 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 			String strData = sdf.format(f.getNascimento());
 			txtNasc.setText(strData);
 			txtSalario.setText(String.valueOf(f.getSalario()));
-			
+			cmbCargo.setValue(f.getCargo());
 		}
 		
 	}
@@ -189,5 +213,7 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 	public Pane generateForm() { 
 		return painelPrincipal;
 	}
+	
+	
 }
 

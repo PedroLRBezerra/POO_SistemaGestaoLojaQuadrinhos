@@ -36,7 +36,7 @@ public class ControlFun {
 	
 	public void exclui(Funcionario f) throws DAOException, SQLException, ClassNotFoundException {
 		FuncionarioDaoImpl fDAO = new FuncionarioDaoImpl();
-		getLista().remove(f);	
+		fDAO.removerPorCPF(f.getCPF());
 	}
 
 	public ObservableList<Funcionario> getLista() {
