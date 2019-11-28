@@ -61,6 +61,7 @@ public class FuncionaroBoundary implements BoundaryContent, EventHandler<ActionE
 		panGrid.add(new Label("Nome"), 0, 0);
 		panGrid.add(txtNome, 1, 0);
 		
+		
 		panGrid.add(new Label("CPF"), 0, 1);
 		panGrid.add(txtCPF, 1, 1);
 		

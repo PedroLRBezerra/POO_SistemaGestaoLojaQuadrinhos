@@ -8,7 +8,7 @@ import entity.Funcionario;
 public interface ClienteDao {
 void  adicionar ( Cliente c )  throws  DAOException ;
 	
-	List<Cliente> pesquisar(String Nome) throws DAOException;
+	Cliente pesquisar(String Nome) throws DAOException;
 
 	void removerPorNome(String Nome) throws DAOException;
 	

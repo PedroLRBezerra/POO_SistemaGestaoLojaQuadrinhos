@@ -278,8 +278,8 @@ public class VendaBoundery  implements BoundaryContent, EventHandler<ActionEvent
 			updateValor();
 		}
 		if(event.getTarget()==btnRemover) {
-			exemplaresVenda.remove(table.getSelectionModel().getSelectedItem());
 			venda.exemplarSelecionados.remove(table.getSelectionModel().getSelectedItem());
+			exemplaresVenda.remove(table.getSelectionModel().getSelectedItem());
 			updateValor();
 		}
 		if(event.getTarget()==btnFinalizarPedido) {

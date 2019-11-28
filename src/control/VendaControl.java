@@ -62,12 +62,13 @@ public class VendaControl {
 	
 	public List<Cliente> buscarClientes(){
 		List<Cliente> lc = new LinkedList<Cliente>();
-		ClienteDaoImpl cliDao = new ClienteDaoImpl();
+		ClienteDaoImpl cliDao;
 		try {
+			cliDao = new ClienteDaoImpl();
 			lc=cliDao.buscarClientes();
-		} catch (DAOException e) {
+		} catch (ClassNotFoundException | SQLException | DAOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 		return lc;
 	}

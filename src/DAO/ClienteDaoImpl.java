@@ -11,24 +11,23 @@ import java.util.List;
 import entity.Cliente;
 
 public class ClienteDaoImpl implements ClienteDao{
-	public void adicionar(Cliente c) throws DAOException {
-		GenericDao gDao = new GenericDao();
-		Connection con=null;
-		try {
-			con = gDao.getConnection();
-		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	
+	private Connection con;
+	public ClienteDaoImpl() throws ClassNotFoundException, SQLException {
 		
+	IGenericDao gDao = new GenericDao();
+    con = gDao.getConnection();
+	}	
+	
+	public void adicionar(Cliente c) throws DAOException {
 		try {
-			String sql = "INSERT INTO Clientes (Nome,CPF,telefone,email,dataNascimento) " +
+			String sql = "INSERT INTO Clientes (Nome,CPF,telefone,email,nascimento) " +
 			"VALUES ( ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, c.getNome());
-			stmt.setString(4, c.getCPF());
-			stmt.setString(2, c.getTelefone());
-			stmt.setString(3, c.getemail());
+			stmt.setString(2, c.getCPF());
+			stmt.setString(3, c.getTelefone());
+			stmt.setString(4, c.getemail());
 			stmt.setDate(5, new java.sql.Date(c.getdataNascimento().getTime()));
 			stmt.executeUpdate();
 			con.close();
@@ -38,47 +37,29 @@ public class ClienteDaoImpl implements ClienteDao{
 		
 	}
 	
-	public List<Cliente> pesquisar (String Nome) throws DAOException {
-		GenericDao gDao = new GenericDao();
-		Connection con=null;
-		try {
-			con = gDao.getConnection();
-		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		List<Cliente> lista = new ArrayList<>();
+	public Cliente pesquisar (String Nome) throws DAOException {
+		Cliente c = new Cliente();
 		try {
 			String sql = "SELECT * FROM Clientes WHERE Nome LIKE ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, "%" + Nome + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) { 
-				Cliente c = new Cliente();
 				c.setId(rs.getLong("id"));
 				c.setNome(rs.getString("nome"));
 				c.setCPF(rs.getString("CPF"));
 				c.setTelefone(rs.getString("telefone"));
 				c.setemail(rs.getString("email"));
-				c.setdataNascimento(rs.getDate("data_nascimento"));
-				lista.add(c);
+				c.setdataNascimento(rs.getDate("nascimento"));
 			}
 			con.close();
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		}
-		return lista;
+		return c;
 	}
 
 	public void removerPorNome(String  Nome) throws DAOException {
-		GenericDao gDao = new GenericDao();
-		Connection con=null;
-		try {
-			con = gDao.getConnection();
-		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		try {
 			String sql = "DELETE FROM Clientes WHERE Nome=?";
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -93,15 +74,6 @@ public class ClienteDaoImpl implements ClienteDao{
 	
 	@Override
 	public List<Cliente> buscarClientes() throws DAOException {
-		GenericDao gDao = new GenericDao();
-		Connection con=null;
-		try {
-			con = gDao.getConnection();
-		} catch (ClassNotFoundException | SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		List<Cliente> l = new LinkedList<Cliente>();
 		try {
 			String sql = "SELECT * FROM Clientes ";

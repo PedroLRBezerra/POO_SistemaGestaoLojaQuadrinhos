@@ -36,6 +36,4 @@ public class Titulo {
 	public void setTitulo_alt(String titulo_alt) {
 		this.titulo_alt = titulo_alt;
 	}
-	
-
 }

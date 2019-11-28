@@ -54,6 +54,8 @@ public class ClienteBoundery implements BoundaryContent,EventHandler<ActionEvent
 		painelCampos.add(txtId, 1, 0);
 		painelCampos.add(new Label("Nome"), 0, 1);
 		painelCampos.add(txtNome, 1, 1);
+		txtId.setDisable(true);
+
 		painelCampos.add(new Label("CPF"), 0, 2);
 		painelCampos.add(txtCPF, 1, 2);
 		painelCampos.add(new Label("Telefone"), 0, 3);
@@ -65,6 +67,7 @@ public class ClienteBoundery implements BoundaryContent,EventHandler<ActionEvent
 
 		painelBotoes.getChildren().addAll(btnAdicionar, btnPesquisar);
 
+		control.buscarClientes();
 		addTableColumns();
 
 		btnAdicionar.addEventHandler(ActionEvent.ANY, this);
@@ -106,7 +109,7 @@ public class ClienteBoundery implements BoundaryContent,EventHandler<ActionEvent
 	public Cliente boundaryParaEntidade() { 
 		Cliente c = new Cliente();
 		try {
-			c.setId(Long.parseLong(txtId.getText()));
+			//c.setId(Long.parseLong(txtId.getText()));
 			c.setNome(txtNome.getText());
 			c.setCPF(txtCPF.getText());
 			c.setTelefone(txttelefone.getText());

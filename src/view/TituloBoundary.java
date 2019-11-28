@@ -56,7 +56,7 @@ public class TituloBoundary implements BoundaryContent, EventHandler<ActionEvent
 		panGrid.add(new Label("Autor"), 0, 3);
 		panGrid.add(txtAutor, 1, 3);
 		
-		
+	
 		panGrid.add(btnAdicionar, 0, 4);
 		panGrid.add(btnPesquisar, 1, 4);
 		panGrid.add(btnLimpa, 2, 4);
