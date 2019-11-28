@@ -49,16 +49,20 @@ nascimento DATE        NOT NULL,
 nome       VARCHAR(100) NOT NULL
 PRIMARY KEY(id)
 )
-
+use quadrinhos
+DROP TABLE venda
 CREATE TABLE venda(
 id			INT		IDENTITY	NOT NULL,
 data_venda	DATE				NOT NULL,
-valor_exemp DECIMAL(7,2)		NOT NULL,
+valor_total DECIMAL(7,2)		NOT NULL,
+tipo_Pagamento VARCHAR(20)		NOT NULL,
+desconto	INT					NOT NULL,
 cliente_id	INT					NOT NULL,
 func_id		INT					NOT NULL
 PRIMARY KEY(id),
 FOREIGN KEY (cliente_id) REFERENCES clienteS(id),
 FOREIGN KEY	(func_id)	REFERENCES funcionarios(id))
+
 
 CREATE TABLE  exemplar(
 id_exemplar		INT				IDENTITY	NOT NULL,
@@ -129,6 +133,7 @@ INSERT INTO funcionarios(CPF,nome,telefone,nascimento,cargo,login,senha,salario)
 select*from funcionarios
 
 INSERT INTO clientes(CPF,telefone,email,nascimento,nome)VALUES
+(' ','0','0','1/1/2001',' '),
 ('21986301749','40028922','pedroluiz2000@gmail.com','25/09/2025','Juliiana'),
 ('43244444222','43444444','pedroluiz@gmail.com','11/11/2005','Alan'),
 ('39834750365','45364565','rajgodtwostars@gmail.com','03/04/2006','João Sardinha'),
